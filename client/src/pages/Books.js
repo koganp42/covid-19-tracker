@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
+import Map from "../components/Map"
 
 function Books() {
   // Setting our component's initial state
@@ -59,7 +60,9 @@ function Books() {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+
+            <Map />
+
             </Jumbotron>
             <form>
               <Input
