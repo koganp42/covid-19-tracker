@@ -58,9 +58,7 @@ function Books() {
       <Container fluid>
         <Row>
           <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
+            <Jumbotron />
             <form>
               <Input
                 onChange={handleInputChange}
