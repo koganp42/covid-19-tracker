@@ -26,12 +26,12 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 // Add routes, both API and view
-// const routes = require("./routes");
-// app.use(routes);
+const routes = require("./routes");
+app.use(routes);
 
 
 // Sync databeace and stand up server
-db.sequelize.sync().then(function(){
+db.sequelize.sync({ force: true }).then(function(){
   app.listen(PORT, function() {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
