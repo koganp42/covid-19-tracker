@@ -57,8 +57,13 @@ function Books() {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+          <Col size="mg-10">
             <Jumbotron />
+
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-6">
             <form>
               <Input
                 onChange={handleInputChange}
@@ -84,9 +89,7 @@ function Books() {
             </form>
           </Col>
           <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
+
             {books.length ? (
               <List>
                 {books.map(book => (

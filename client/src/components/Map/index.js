@@ -34,7 +34,13 @@ function Map(props) {
                         updateSelectedPin(null)
                     }}
                 >
-                    <div>"details!"</div>
+                    <div>
+                        <h5>ID: {selectedPin.id}</h5>
+                        <p>Name: {selectedPin.name}</p>
+                        <p>Age: {selectedPin.age}</p>
+                        <p>Sex: {selectedPin.sex}</p>
+                        <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
+                    </div>
                 </InfoWindow>
             )}
 
