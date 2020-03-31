@@ -1,13 +1,44 @@
-import React from "react";
-import { GoogleMap, withScriptjs, withGoogleMap } from 'react-google-maps';
+import React, { useState } from "react";
+import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
+import hospitalData from "../../utils/hospitalData";
 
 
-function Map() {
+
+function Map(props) {
+
+    const [selectedPin, updateSelectedPin] = useState(null);
+
+
     return (
         <GoogleMap 
             defaultZoom={10} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
-        />
+        >
+            
+            {hospitalData.map(hospital => (
+                <Marker 
+                    key={hospital.id} 
+                    position={{lat:hospital.lat, lng:hospital.lng}} 
+                    onClick={() => {
+                        updateSelectedPin(hospital)
+                    }}
+                /> 
+            ))}
+
+            {selectedPin && (
+                <InfoWindow 
+                    position={{
+                        lat:selectedPin.lat, lng:selectedPin.lng
+                    }} 
+                    onCloseClick={() => {
+                        updateSelectedPin(null)
+                    }}
+                >
+                    <div>"details!"</div>
+                </InfoWindow>
+            )}
+
+        </GoogleMap>
     )
 }
 
@@ -21,7 +52,10 @@ export default function App() {
                 loadingElement={<div style={{height:'100%'}} />}
                 containerElement={<div style={{height:'100%'}} />}
                 mapElement={<div style={{height:'100%'}} />}
-            />
+            >
+               {console.log(hospitalData)}
+            </WrappedMap>
+            
         </div>
     )
 };
