@@ -52,7 +52,7 @@ const hospitalData =
         "name": "Carmine Bosc",
         "id":6,
         "lat": 36.118750,
-        "lng": -86.011790,
+        "lng": -87.011790,
         "sex": "M",
         "smoker": true,
         "age": 60
