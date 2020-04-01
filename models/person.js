@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
-    let d = new Date();
-    let date = d. getDate()+1; //to include children born today
-    let month = d. getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12.
-    let year = d. getFullYear();
-    let dateStr = year + "-" + month + "-" + date;
+    // let d = new Date();
+    // let date = d. getDate()+1; //to include children born today
+    // let month = d. getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12.
+    // let year = d. getFullYear();
+    // let dateStr = year + "-" + month + "-" + date;
     const Person = sequelize.define("Person", {
         firstName: {
             type: DataTypes.STRING,
@@ -19,15 +19,23 @@ module.exports = function(sequelize, DataTypes) {
             isAlpha: true
             }
         },
-        dateOfBirth: {
-            type: DataTypes.STRING,
+        age: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                isDate: true,
-                isAfter: "1902-01-01",
-                isBefore: dateStr
+                max: 120,     
+                min: 0
             }
         },
+        // dateOfBirth: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     validate: {
+        //         isDate: true,
+        //         isAfter: "1902-01-01",
+        //         isBefore: dateStr
+        //     }
+        // },
         gender: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -84,14 +92,33 @@ module.exports = function(sequelize, DataTypes) {
         listPreExistingConditions: {
             type: DataTypes.TEXT,
             allowNull:true
+        },
+        sick: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false,
+            set: function(value) {
+              if (value === 'true') value = true;
+              if (value === 'false') value = false;
+              this.setDataValue('sick', value);
+            }
         }
     }); 
     
-    Person.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false
-        }
-      });
+    Person.associate = function(models) {
+        Person.belongsTo(models.User, {
+            foreignKey: {
+              allowNull: false
+            }
+          });
+    
+          Person.hasOne(models.Illness, {
+              foreignKey: {
+                  allowNull: false
+              }
+          }); 
+      };
+   
 
     return Person;
 }
