@@ -1,12 +1,14 @@
-import React from "react";
+import React from "react"; 
+import Map from  "../Map"
 
 function Jumbotron({ children }) {
+
+
+
+
   return (
-    <div
-      style={{ height: 300, clear: "both", paddingTop: 120, textAlign: "center" }}
-      className="jumbotron"
-    >
-      {children}
+    <div>
+    <Map />
     </div>
   );
 }
