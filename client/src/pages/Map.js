@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
-import hospitalData from "../utils/hospitalData";
+import patientData from "../utils/patientData";
 import mapStyles from "./mapStyles"
+import Container from '@material-ui/core/Container';
+
 
 
 
@@ -14,18 +16,19 @@ function Map(props) {
 
 
     return (
+       
         <GoogleMap 
             defaultZoom={10} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
             defaultOptions={{styles:mapStyles}}
         >
             
-            {hospitalData.map(hospital => (
+            {patientData.map(patient => (
                 <Marker 
-                    key={hospital.id} 
-                    position={{lat:hospital.lat, lng:hospital.lng}} 
+                    key={patient.id} 
+                    position={{lat:patient.lat, lng:patient.lng}} 
                     onClick={() => {
-                        updateSelectedPin(hospital)
+                        updateSelectedPin(patient)
                     }}
                     icon={{
                         url: "/coronavirus.png",
@@ -54,6 +57,8 @@ function Map(props) {
             )}
 
         </GoogleMap>
+
+      
     )
 }
 
@@ -61,16 +66,22 @@ const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function App() {
     return(
+   
         <div style={{width:"100vh", height:"80vh"}}>
+
             <WrappedMap 
                 googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw"}
                 loadingElement={<div style={{height:'100%'}} />}
                 containerElement={<div style={{height:'100%'}} />}
                 mapElement={<div style={{height:'100%'}} />}
             >
-               {console.log(hospitalData)}
+               {console.log(patientData)}
             </WrappedMap>
             
         </div>
+
+   
+
+   
     )
 };

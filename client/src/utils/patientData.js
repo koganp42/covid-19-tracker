@@ -1,6 +1,6 @@
 
 
-const hospitalData =
+const patientData =
 [
     {
         "name": "Ben Simmons",
@@ -59,4 +59,4 @@ const hospitalData =
     }
 ]
 
-export default hospitalData
+export default patientData
