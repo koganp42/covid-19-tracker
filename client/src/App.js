@@ -11,9 +11,9 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/map"]}>
+          {/* <Route exact path={["/", "/map"]}>
             <Map />
-          </Route>
+          </Route> */}
           {/* <Route exact path="/users/:id">
             <User />
           </Route> */}
