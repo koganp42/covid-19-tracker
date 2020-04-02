@@ -2,16 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
 import Nav from "./components/Nav";
-import Map from "./pages/Map"
+import Map from "./pages/Map";
+import Container from '@material-ui/core/Container';
 
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
-          <Route exact path={["/", "/map"]}>
+          <Route exact path={["/", "/map"]}>   
             <Map />
           </Route>
           {/* <Route exact path="/users/:id">

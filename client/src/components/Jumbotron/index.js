@@ -1,16 +1,16 @@
-import React from "react"; 
-import Map from  "../Map"
+// import React from "react"; 
+// import Map from  "../Map"
 
-function Jumbotron({ children }) {
-
-
+// function Jumbotron({ children }) {
 
 
-  return (
-    <div>
-    <Map />
-    </div>
-  );
-}
 
-export default Jumbotron;
+
+//   return (
+//     <div>
+//     <Map />
+//     </div>
+//   );
+// }
+
+// export default Jumbotron;

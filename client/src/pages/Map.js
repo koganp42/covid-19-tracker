@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
 import patientData from "../utils/patientData";
-import mapStyles from "./mapStyles"
-import Container from '@material-ui/core/Container';
-
-
-
-
-
+import mapStyles from "../styleStuff/mapStyles"
+import Nav from '../components/Nav'
 
 
 function Map(props) {
@@ -16,7 +11,8 @@ function Map(props) {
 
 
     return (
-       
+        <Fragment>
+          
         <GoogleMap 
             defaultZoom={10} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
@@ -25,26 +21,26 @@ function Map(props) {
             
             {patientData.map(patient => (
                 <Marker 
-                    key={patient.id} 
-                    position={{lat:patient.lat, lng:patient.lng}} 
-                    onClick={() => {
-                        updateSelectedPin(patient)
-                    }}
-                    icon={{
-                        url: "/coronavirus.png",
-                        scaledSize: new window.google.maps.Size(25, 25)
-                    }}
+                key={patient.id} 
+                position={{lat:patient.lat, lng:patient.lng}} 
+                onClick={() => {
+                    updateSelectedPin(patient)
+                }}
+                icon={{
+                    url: "/coronavirus.png",
+                    scaledSize: new window.google.maps.Size(25, 25)
+                }}
                 /> 
-            ))}
+                ))}
 
             {selectedPin && (
                 <InfoWindow 
-                    position={{
-                        lat:selectedPin.lat, lng:selectedPin.lng
-                    }} 
-                    onCloseClick={() => {
-                        updateSelectedPin(null)
-                    }}
+                position={{
+                    lat:selectedPin.lat, lng:selectedPin.lng
+                }} 
+                onCloseClick={() => {
+                    updateSelectedPin(null)
+                }}
                 >
                     <div>
                         <h5>ID: {selectedPin.id}</h5>
@@ -57,6 +53,7 @@ function Map(props) {
             )}
 
         </GoogleMap>
+        </Fragment>
 
       
     )
