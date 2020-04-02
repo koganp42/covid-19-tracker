@@ -36,15 +36,15 @@ module.exports = function(sequelize, DataTypes) {
         //         isBefore: dateStr
         //     }
         // },
-        gender: {
+        sex: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [['male', 'female', 'non-binary', 'prefer not to disclose']],
+                isIn: [['male', 'female', 'other']],
             }
         },
         lat: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false, 
             validate: {
                 max: 90,
@@ -52,31 +52,18 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         lon: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false, 
             validate: {
                 max: 180,
                 min: -180
             }
         },
-        currentlySmokes: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
+        smoking: {
+            type: DataTypes.STRING,
             allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('currentlySmokes', value);
-            }
-        },
-        historySmoking: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('historySmoking', value);
+            validate: {
+                isIn: [['current', 'former', 'never']],
             }
         },
         preExistingConditions: {
