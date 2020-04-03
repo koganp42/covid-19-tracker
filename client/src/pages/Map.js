@@ -5,6 +5,7 @@ import mapStyles from "../styleStuff/mapStyles"
 import Nav from '../components/Nav'
 
 
+
 function Map(props) {
 
     const [selectedPin, updateSelectedPin] = useState(null);

@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-const withStyles = makeStyles({
+const useStyles = makeStyles({
   list: {
     width: 250,
   },
@@ -21,7 +21,7 @@ const withStyles = makeStyles({
 });
 
 export default function TemporaryDrawer() {
-  const classes = withStyles();
+  const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -79,4 +79,3 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
-

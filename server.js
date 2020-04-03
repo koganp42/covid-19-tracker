@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3001;
+// const seedDatabase = require("./seed"); 
 
 //To use .env file on localserver
 require('dotenv').config();
