@@ -7,9 +7,6 @@ import Container from '@material-ui/core/Container';
 
 
 
-
-
-
 function Map(props) {
 
     const [selectedPin, updateSelectedPin] = useState(null);
