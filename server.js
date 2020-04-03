@@ -31,7 +31,17 @@ app.use(routes);
 
 
 // Sync databeace and stand up server
-db.sequelize.sync({ force: true }).then(function(){
+db.sequelize.sync({ force: false }).then(async function(){
+  // try{
+  //       console.log('connected'); 
+  //       const benUser = await db.User.create({email: "ben@work.com", password: "1234"}); 
+  //       console.log(benUser.dataValues.id); 
+  //       const newUserId= benUser.dataValues.id; 
+  //       const ben = await db.Person.create({ firstName: "Ben", lastName: "Simmons", age: 44, sex: "male", lat: 36.151490, lon: -86.765010, smoking: "never", preExistingConditions: false, sick: true, UserId: newUserId});
+  //       console.log("Jane's auto-generated ID:", ben.id);
+  //   }  catch (err){
+  //       console.log(err); 
+  //   }
   app.listen(PORT, function() {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
