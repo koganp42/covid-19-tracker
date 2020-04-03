@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+// import CoronaDatePicker from '../components/FormComponents/datePicker';
+import { InlineDatePicker } from "@material-ui/pickers";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,21 +41,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
-  const [sexValue, setSexValue] = React.useState('female');
-  const [smokerValue, setSmokerValue] = React.useState('never');
-  //   const [formObject, setFormObject] = useState({})
-  //     //Handles updating component state when the user types into the input field
-  // function handleInputChange(event) {
-  //   const { name, value } = event.target;
-  //   setFormObject({...formObject, [name]: value})
-  // };
-  const handleChangeSex = (event) => {
-    setSexValue(event.target.value);
+export default function TestForm() {
+  const [formObject, setFormObject] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    age: 0,
+    userSex: "female",
+    smokerValue: "never",
+    testResultValue: "positive"
+  })
+  //Handles updating component state when the user types into the input field
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setFormObject({ ...formObject, [name]: value })
   };
-  const handleChangeSmoker = (event) => {
-    setSmokerValue(event.target.value);
-  };
+
 
   const classes = useStyles();
 
@@ -76,6 +81,8 @@ export default function SignUp() {
                 fullWidth
                 id="firstName"
                 label="First Name"
+                value={formObject.firstName}
+                onChange={handleInputChange}
                 autoFocus
               />
             </Grid>
@@ -88,6 +95,8 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                value={formObject.lastName}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,6 +108,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={formObject.email}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,12 +122,19 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={formObject.password}
+                onChange={handleInputChange}
               />
             </Grid>
+            
+            <Grid item xs={12}>
+              <InlineDatePicker></InlineDatePicker>
+            </Grid>
+            
             <Grid item xs={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend">Sex</FormLabel>
-                <RadioGroup aria-label="sex" name="gender1" value={sexValue} onChange={handleChangeSex}>
+                <RadioGroup aria-label="sex" name="userSex" value={formObject.userSex} onChange={handleInputChange}>
                   <FormControlLabel value="female" control={<Radio />} label="Female" />
                   <FormControlLabel value="male" control={<Radio />} label="Male" />
                   <FormControlLabel value="other" control={<Radio />} label="Other" />
@@ -126,10 +144,31 @@ export default function SignUp() {
             <Grid item xs={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend">Smoking History</FormLabel>
-                <RadioGroup aria-label="smoker" name="smoker1" value={smokerValue} onChange={handleChangeSmoker}>
+                <RadioGroup aria-label="smoker" name="smokerValue" value={formObject.smokerValue} onChange={handleInputChange}>
+                  <FormControlLabel value="never" control=
+                    {<Radio />} label="Never Smoked" />
                   <FormControlLabel value="current" control={<Radio />} label="Currently Smoke" />
                   <FormControlLabel value="former" control={<Radio />} label="Used to Smoke" />
-                  <FormControlLabel value="never" control={<Radio />} label="Never Smoked" />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">What was the result of your test for Coronavirus?</FormLabel>
+                <RadioGroup aria-label="smoker" name="testResultValue" value={formObject.testResultValue} onChange={handleInputChange}>
+                  <FormControlLabel value="positive" control=
+                    {<Radio />} label="Postive" />
+                  <FormControlLabel value="negative" control={<Radio />} label="Negative" />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">What was the result of your test for Coronavirus?</FormLabel>
+                <RadioGroup aria-label="testResultValue" name="testResultValue" value={formObject.testResultValue} onChange={handleInputChange}>
+                  <FormControlLabel value="positive" control=
+                    {<Radio />} label="Postive" />
+                  <FormControlLabel value="negative" control={<Radio />} label="Negative" />
                 </RadioGroup>
               </FormControl>
             </Grid>
@@ -154,7 +193,7 @@ export default function SignUp() {
             className={classes.submit}
           >
             Sign Up
-                  </Button>
+          </Button>
           {/* Commenting the following out to be used in a later version */}
           {/* <Grid container justify="flex-end">
                       <Grid item>
