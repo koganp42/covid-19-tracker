@@ -17,8 +17,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-// import CoronaDatePicker from '../components/FormComponents/datePicker';
-import { InlineDatePicker } from "@material-ui/pickers";
+import CoronaDatePicker from '../components/FormComponents/datePicker';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,9 +127,11 @@ export default function TestForm() {
               />
             </Grid>
             
+            
             <Grid item xs={12}>
-              <InlineDatePicker></InlineDatePicker>
+              <CoronaDatePicker></CoronaDatePicker>
             </Grid>
+            
             
             <Grid item xs={12}>
               <FormControl component="fieldset">
