@@ -5,6 +5,7 @@ module.exports = {
         db.Person
             .findAll({})
             .then(function(dbPeople) {
+                console.log(dbPeople);
                 res.json(dbPeople); 
             });
     },

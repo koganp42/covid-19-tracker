@@ -1,14 +1,32 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
 import patientData from "../utils/patientData";
 import mapStyles from "../styleStuff/mapStyles"
-import Nav from '../components/Nav'
+import API from "../utils/API"
 
 
 
 function Map(props) {
 
     const [selectedPin, updateSelectedPin] = useState(null);
+    const [people, setPeople] = useState([]);
+
+
+      // Load all books and store them with setBooks
+  useEffect(() => {
+    loadPeople()
+  }, [])
+
+  // Loads all People and sets them to People
+  function loadPeople() {
+    API.getPeople()
+      .then(res => {
+          console.log(res);
+          setPeople(res);
+      }
+      )
+      .catch(err => console.log(err));
+  };
 
 
     return (
@@ -19,8 +37,8 @@ function Map(props) {
             defaultCenter={{lat:36.166340, lng:-86.779068}}
             defaultOptions={{styles:mapStyles}}
         >
-            
-            {patientData.map(patient => (
+             
+            {people.map(patient => (
                 <Marker 
                 key={patient.id} 
                 position={{lat:patient.lat, lng:patient.lng}} 
