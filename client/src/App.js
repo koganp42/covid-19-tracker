@@ -1,19 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
-import Nav from "./components/Nav";
-import Map from "./pages/Map"
+
+import Map from "./pages/Map";
+import Container from '@material-ui/core/Container';
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
+      <Header />
         <Switch>
-          {/* <Route exact path={["/", "/map"]}>
+          <Route exact path={["/", "/map"]}>   
             <Map />
-          </Route> */}
+            <Footer />
+          </Route>
           {/* <Route exact path="/users/:id">
             <User />
           </Route> */}

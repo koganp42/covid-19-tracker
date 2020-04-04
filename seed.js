@@ -53,6 +53,7 @@ const seedDatabase = ()=>{
         .catch( err => console.log(err)); 
 }
 
+
 seedDatabase()
     .then(()=>{
         process.exit(); 
