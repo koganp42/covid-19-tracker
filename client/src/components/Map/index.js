@@ -4,6 +4,7 @@ import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
 import Paper from "../Paper"
+import "./style.css"
 
 
 
@@ -85,13 +86,13 @@ const WrappedMap = withScriptjs(withGoogleMap(Map))
 export default function App() {
     return(
    
-        <div style={{width:"100vh", height:"80vh"}}>
+        <div style={{width:"100vh", height:"80vh"}} className={"mainDiv"}>
 
             <WrappedMap 
                 googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw"}
-                loadingElement={<div style={{height:'100%'}} />}
-                containerElement={<div style={{height:'100%'}} />}
-                mapElement={<div style={{height:'100%'}} />}
+                loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
+                containerElement={<div style={{height:'100%'}} className={"mapContainer"} />}
+                mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
             >
                {console.log(patientData)}
             </WrappedMap>

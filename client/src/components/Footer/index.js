@@ -8,6 +8,7 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
+ 
 });
 
 export default function CenteredTabs() {
@@ -27,9 +28,9 @@ export default function CenteredTabs() {
         textColor="primary"
         centered
       >
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
+        <Tab label="Click Me." />
+        <Tab label="Or Me?" />
+        <Tab label="Or Me!" />
       </Tabs>
     </Paper>
   );

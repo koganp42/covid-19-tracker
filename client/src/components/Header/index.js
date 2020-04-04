@@ -11,13 +11,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 5,
+
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    
   },
   title: {
     flexGrow: 1,
   },
+  toolBar: {
+    background: 'linear-gradient(45deg, #6c63ff 30%, #92e8f8 90%)',
+
+  }
 }));
 
 export default function ButtonAppBar() {
@@ -26,7 +32,7 @@ export default function ButtonAppBar() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.toolBar}>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
