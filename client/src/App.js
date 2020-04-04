@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
 import Nav from "./components/Nav";
 import Map from "./pages/Map"
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 
 function App() {
   return (
     <Router>
-      <div>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Nav />
         <Switch>
           {/* <Route exact path={["/", "/map"]}>
@@ -21,7 +23,7 @@ function App() {
             <TestForm />
           </Route>
         </Switch>
-      </div>
+      </MuiPickersUtilsProvider>
     </Router>
   );
 }
