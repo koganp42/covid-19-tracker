@@ -23,9 +23,9 @@ const peopleToSeed= [
         smoking: "never",
         preExistingConditions: false,
         sick: true,
-        createdAt: "2020-02-22 04:01:38",
-        updatedAt:  "2020-02-22 04:01:38",
-        userId: 1, 
+        UserId: 1
+        // createdAt: "2020-02-22 04:01:38",
+        // updatedAt:  "2020-02-22 04:01:38"
     },
     {
         firstName: "Brenda",
@@ -37,21 +37,22 @@ const peopleToSeed= [
         smoking: "never",
         preExistingConditions: false,
         sick: false,
-        createdAt: "2020-02-22 04:01:50",
-        updatedAt:  "2020-02-22 04:01:50",
-        userId: 2, 
+        UserId: 2 
+        // createdAt: "2020-02-22 04:01:50",
+        // updatedAt:  "2020-02-22 04:01:50"
     }
 
 ]
 
 const seedDatabase = ()=>{
-   return  db.User.bulkCreate(usersToSeed)
-        .then(()=> {
-            db.Person.bulkCreate(peopleToSeed)
+    return db.User.bulkCreate(usersToSeed)
+        .then(async()=> {
+            await db.Person.bulkCreate(peopleToSeed)
                 .then(()=>{
                     console.log("seed complete"); 
                 })
                 .catch(err=> console.log(err)); 
+            console.log("created users"); 
         })
         .catch( err => console.log(err)); 
 }
@@ -62,4 +63,4 @@ seedDatabase()
         process.exit(); 
     }); 
 
-module.exports = seedDatabase(); 
+// module.exports = seedDatabase(); 
