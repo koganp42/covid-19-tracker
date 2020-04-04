@@ -21,7 +21,7 @@ function App() {
           {/* <Route exact path="/users/:id">
             <User />
           </Route> */}
-          <Route exact path={["/testform"]}>
+          <Route exact path={["/TestForm"]}>
             <TestForm />
           </Route>
         </Switch>
