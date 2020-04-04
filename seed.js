@@ -24,8 +24,6 @@ const peopleToSeed= [
         preExistingConditions: false,
         sick: true,
         UserId: 1
-        // createdAt: "2020-02-22 04:01:38",
-        // updatedAt:  "2020-02-22 04:01:38"
     },
     {
         firstName: "Brenda",
@@ -38,8 +36,6 @@ const peopleToSeed= [
         preExistingConditions: false,
         sick: false,
         UserId: 2 
-        // createdAt: "2020-02-22 04:01:50",
-        // updatedAt:  "2020-02-22 04:01:50"
     }
 
 ]
