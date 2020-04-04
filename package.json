@@ -31,6 +31,7 @@
     "fs": "0.0.1-security",
     "google-maps-react": "^2.0.2",
     "if-env": "^1.0.4",
+    "material-ui-icons": "^1.0.0-beta.36",
     "mongoose": "^5.3.16",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
