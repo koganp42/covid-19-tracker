@@ -4,9 +4,25 @@ module.exports = {
     findAll: function(req, res) {
         db.Person
             .findAll({})
-            .then(function(dbPeople) {
+            .then(dbPeople => {
                 res.json(dbPeople); 
             });
+    },
+
+    findById: function(req, res){
+        db.Person  
+            .findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(dbPerson=>{
+                res.json(dbPerson); 
+            })
+            .catch(err =>{
+                res.status(404).json(err); 
+            }); 
+            
     },
 
     create: function(req, res) {
@@ -17,6 +33,38 @@ module.exports = {
             })
             .catch(err=>{
                 console.log(err); 
+            }); 
+    },
+
+    update: function(req, res){
+        db.Person   
+            .update(req.body,
+                {
+                    where: {
+                        id: req.params.id
+                    }
+                }
+            )
+            .then(dbPerson =>{
+                res.json(dbPerson)
+            })  
+            .catch(err=>{
+                res.status(404); 
+            }); 
+    },
+
+    delete: function(req, res){
+        db.Person   
+            .destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then( dbPerson=>{
+                res.json(dbPerson)
+            })
+            .catch( err =>{
+                res.status(404); 
             }); 
     }
 }; 
