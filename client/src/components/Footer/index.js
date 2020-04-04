@@ -28,9 +28,9 @@ export default function CenteredTabs() {
         textColor="primary"
         centered
       >
-        <Tab label="Click Me." />
-        <Tab label="Or Me?" />
-        <Tab label="Or Me!" />
+        <Tab label="Kogan" />
+        <Tab label="Jamie" />
+        <Tab label="Alex" />
       </Tabs>
     </Paper>
   );
