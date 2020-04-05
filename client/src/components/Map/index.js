@@ -58,7 +58,7 @@ function Map(props) {
             {selectedPin && (
                 <InfoWindow 
                 position={{
-                    lat:selectedPin.lat, lng:selectedPin.lng
+                    lat:selectedPin.lat, lng:selectedPin.lon
                 }} 
                 onCloseClick={() => {
                     updateSelectedPin(null)
