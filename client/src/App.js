@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
-import Nav from "./components/Nav";
+// import Nav from "./components/Nav";
 import Map from "./pages/Map";
 import Container from '@material-ui/core/Container';
 import Header from "./components/Header"
@@ -21,7 +21,7 @@ function App() {
           {/* <Route exact path="/users/:id">
             <User />
           </Route> */}
-          <Route exact path={["/testform"]}>
+          <Route exact path={["/TestForm"]}>
             <TestForm />
           </Route>
         </Switch>
