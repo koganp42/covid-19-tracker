@@ -15,6 +15,8 @@ export const CoronavirusTextField = ({field, value, handleChange}) => {
           required = {field.required}
           type={field.type}
           value={value}
+          multiline={field.multiline}
+          rows={field.rows}
           variant="outlined"
         />
       </Grid>

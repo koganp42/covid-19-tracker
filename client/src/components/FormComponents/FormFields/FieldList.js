@@ -91,7 +91,9 @@ export const FieldList = [
         id: "listPreExitingConditions",
         label: "If you answered yes to the previous question, please list your pre-existing medical conditions:",
         type: "text",
-        fullWidth: true
+        fullWidth: true,
+        multiline: true,
+        rows: "3"
     },
     {
         context: "person",
@@ -123,7 +125,7 @@ export const FieldList = [
         context: "illness",
         fieldType: "date",
         id: "dateOfOnset",
-        label: "To the best of your knowledge, what day did you begin experiencing symptoms of coronavirus?"
+        label: "When did you begin experiencing symptoms?"
     },
     {
         context: "illness",
@@ -131,7 +133,9 @@ export const FieldList = [
         id: "symptoms",
         label: "If you are positive or presumed positive for coronavirus, please list any symptoms you are experiencing.",
         type: "text",
-        fullWidth: true
+        fullWidth: true,
+        multiline: true,
+        rows: "3"
     },
     {
         context: "illness",

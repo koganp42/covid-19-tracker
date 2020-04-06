@@ -48,7 +48,7 @@ export default function TestForm() {
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
-    sick: "positive"
+    sick: "false"
   });
 
   const [illnessState, setIllnessState] = useState({
@@ -148,7 +148,7 @@ export default function TestForm() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Submit
           </Button>
           {/* Commenting the following out to be used in a later version */}
           {/* <Grid container justify="flex-end">

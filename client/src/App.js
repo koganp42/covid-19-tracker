@@ -26,6 +26,7 @@ function App() {
             <TestForm />
           </Route>
         </Switch>
+        </div>
       </MuiPickersUtilsProvider>
     </Router>
   );
