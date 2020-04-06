@@ -66,7 +66,7 @@ function Map(props) {
                 >
                     <div>
                         <h5>ID: {selectedPin.id}</h5>
-                        <p>Name: {selectedPin.name}</p>
+                        <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
                         <p>Age: {selectedPin.age}</p>
                         <p>Sex: {selectedPin.sex}</p>
                         <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
