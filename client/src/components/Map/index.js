@@ -3,7 +3,6 @@ import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'reac
 import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
-import Paper from "../Paper"
 import "./style.css"
 
 
@@ -66,7 +65,7 @@ function Map(props) {
                 >
                     <div>
                         <h5>ID: {selectedPin.id}</h5>
-                        <p>Name: {selectedPin.name}</p>
+                        <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
                         <p>Age: {selectedPin.age}</p>
                         <p>Sex: {selectedPin.sex}</p>
                         <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
