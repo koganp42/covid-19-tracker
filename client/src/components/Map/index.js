@@ -25,7 +25,7 @@ function Map(props) {
     API.getPeople()
       .then(res => {
           console.log(res.data);
-          setPeople(res);
+          setPeople(res.data);
       }
       )
       .catch(err => console.log(err));
@@ -41,10 +41,10 @@ function Map(props) {
             defaultOptions={{styles:mapStyles}}
         >
              
-            {patientData.map(patient => (
+            {people.map(patient => (
                 <Marker 
                 key={patient.id} 
-                position={{lat:patient.lat, lng:patient.lng}} 
+                position={{lat:patient.lat, lng:patient.lon}} 
                 onClick={() => {
                     updateSelectedPin(patient)
                 }}
@@ -58,7 +58,7 @@ function Map(props) {
             {selectedPin && (
                 <InfoWindow 
                 position={{
-                    lat:selectedPin.lat, lng:selectedPin.lng
+                    lat:selectedPin.lat, lng:selectedPin.lon
                 }} 
                 onCloseClick={() => {
                     updateSelectedPin(null)
