@@ -37,7 +37,12 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Covid-19 Tracker
           </Typography>
-          <Button color="inherit"></Button>
+
+          <Button 
+          color="inherit"
+          href="/TestForm"
+          >Back to Form</Button>
+
         </Toolbar>
       </AppBar>
     </div>

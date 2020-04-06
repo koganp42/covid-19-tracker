@@ -3,7 +3,7 @@ import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'reac
 import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
-import Paper from "../Paper"
+
 import "./style.css"
 
 
@@ -25,7 +25,9 @@ function Map(props) {
     API.getPeople()
       .then(res => {
           console.log(res.data);
-          setPeople(res);
+
+          setPeople(res.data);
+
       }
       )
       .catch(err => console.log(err));
@@ -41,10 +43,12 @@ function Map(props) {
             defaultOptions={{styles:mapStyles}}
         >
              
-            {patientData.map(patient => (
+
+            {people.map(patient => (
                 <Marker 
                 key={patient.id} 
-                position={{lat:patient.lat, lng:patient.lng}} 
+                position={{lat:patient.lat, lng:patient.lon}} 
+
                 onClick={() => {
                     updateSelectedPin(patient)
                 }}
@@ -58,7 +62,9 @@ function Map(props) {
             {selectedPin && (
                 <InfoWindow 
                 position={{
-                    lat:selectedPin.lat, lng:selectedPin.lng
+
+                    lat:selectedPin.lat, lng:selectedPin.lon
+
                 }} 
                 onCloseClick={() => {
                     updateSelectedPin(null)
@@ -66,7 +72,9 @@ function Map(props) {
                 >
                     <div>
                         <h5>ID: {selectedPin.id}</h5>
-                        <p>Name: {selectedPin.name}</p>
+
+                        <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
+
                         <p>Age: {selectedPin.age}</p>
                         <p>Sex: {selectedPin.sex}</p>
                         <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>

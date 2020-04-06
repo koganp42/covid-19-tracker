@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
-// import Nav from "./components/Nav";
 import Map from "./pages/Map";
-import Container from '@material-ui/core/Container';
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
