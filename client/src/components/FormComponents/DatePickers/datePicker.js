@@ -1,21 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
+import Grid from '@material-ui/core/Grid';
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
-function CoronavirusDatePicker(props) {
+export const CoronavirusDatePicker = ({field, value, handleChange}) => {
   return (
-    <Fragment>
-
+    <Grid item xs={field.xs || 12} sm={field.sm || 12}>
       <KeyboardDatePicker
         clearable
-        label={props.label}
-        value={props.selectedDate}
-        placeholder="2018/10/10"
-        onChange={props.handleDateChange}
         format="yyyy/MM/dd"
+        label={field.label}
+        onChange={handleChange}
+        placeholder="2019/12/01"
+        value={value}
       />
-
-    </Fragment>
+    </Grid>
   );
 }
-
-export default CoronavirusDatePicker;
