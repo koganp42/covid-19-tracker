@@ -17,6 +17,7 @@ export const CoronavirusRadio = ({ field, value, handleChange }) => {
                 value={option.value}
                 control={<Radio />}
                 label={option.label}
+                key={option.label}
             />)
         })
     }
