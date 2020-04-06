@@ -63,7 +63,7 @@ module.exports = function(sequelize, DataTypes) {
             set: function(value) {
               if (value === 'true') value = true;
               if (value === 'false') value = false;
-              this.setDataValue('intesiveCare', value);
+              this.setDataValue('intensiveCare', value);
             }
         },
         death: {
