@@ -8,8 +8,9 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/journal/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" /> -->
   <title>Covid-19 Results Tracking And Reporting</title>
+
 </head>
 
 <body>
@@ -17,6 +18,25 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
+
+  <script>
+    // Initialize and add the map
+    function initMap() {
+      // The location of Uluru
+      var uluru = {lat: -25.344, lng: 131.036};
+      // The map, centered at Uluru
+      var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 4, center: uluru});
+      // The marker, positioned at Uluru
+      var marker = new google.maps.Marker({position: uluru, map: map});
+    }
+        </script>
+
+
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw&callback=initMap">
+    </script>
 </body>
 
 </html>

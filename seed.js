@@ -37,21 +37,43 @@ const peopleToSeed= [
         sick: false,
         UserId: 2 
     }
-
 ]
 
+const illnessesToSeed= [
+    {
+        "tested": true,
+        "dateOfTest": "2020-03-10",
+        "dateOfOnset": "2020-03-05",
+        "symptoms": "dry cough and fever",
+        "hospitalized": true,
+        "dateOfHospitalization": "2020-03-10",
+        "intensiveCare": false,
+        "death": false,
+        "dateOfRecovery": "2020-03-17",
+        "PersonId": 1
+    }
+]
+
+// want to refactor this so it's not using await and then
 const seedDatabase = ()=>{
     return db.User.bulkCreate(usersToSeed)
-        .then(async()=> {
+        .then(async ()=> {
             await db.Person.bulkCreate(peopleToSeed)
-                .then(()=>{
-                    console.log("seed complete"); 
+                .then(async()=>{
+                    await db.Illness.bulkCreate(illnessesToSeed)
+                        .then(()=>{
+                            console.log("seed complete"); 
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        }); 
                 })
                 .catch(err=> console.log(err)); 
             console.log("created users"); 
         })
         .catch( err => console.log(err)); 
 }
+
 
 seedDatabase()
     .then(()=>{

@@ -2,23 +2,22 @@ const db = require("../models");
 
 module.exports = {
     findAll: function(req, res) {
-        db.User
+        db.Illness
             .findAll({})
-            .then(function(dbUsers) {
-                res.json(dbUsers); 
+            .then(dbIllnesses => {
+                res.json(dbIllnesses); 
             });
     },
 
-    //change the id to be retrieved internally so that can't access other user's accounts
     findById: function(req, res){
-        db.User  
+        db.Illness  
             .findOne({
                 where: {
                     id: req.params.id
                 }
             })
-            .then(dbUser=>{
-                res.json(dbUser); 
+            .then(dbIllness=>{
+                res.json(dbIllness); 
             })
             .catch(err =>{
                 res.status(404).json(err); 
@@ -27,8 +26,7 @@ module.exports = {
     },
 
     create: function(req, res) {
-        console.log(req.body); 
-        db.User
+        db.Illness 
             .create(req.body)
             .then(result=>{
                 res.status(200).json(result)
@@ -39,7 +37,7 @@ module.exports = {
     },
 
     update: function(req, res){
-        db.User   
+        db.Illness   
             .update(req.body,
                 {
                     where: {
@@ -47,8 +45,8 @@ module.exports = {
                     }
                 }
             )
-            .then(dbUser =>{
-                res.json(dbUser)
+            .then(dbIllness =>{
+                res.json(dbIllness)
             })  
             .catch(err=>{
                 res.status(404); 
@@ -56,14 +54,14 @@ module.exports = {
     },
 
     delete: function(req, res){
-        db.User   
+        db.Illness   
             .destroy({
                 where: {
                     id: req.params.id
                 }
             })
-            .then( dbUser=>{
-                res.json(dbUser)
+            .then( dbIllness=>{
+                res.json(dbIllness)
             })
             .catch( err =>{
                 res.status(404); 

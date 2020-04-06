@@ -1,68 +1,106 @@
-// import React, { useState } from "react";
-// import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
-// import hospitalData from "../../utils/hospitalData";
+import React, { useState, Fragment, useEffect } from "react";
+import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'react-google-maps';
+import patientData from "../../utils/patientData";
+import mapStyles from "../../styleStuff/mapStyles"
+import API from "../../utils/API"
+import Paper from "../Paper"
+import "./style.css"
 
 
 
-// function Map(props) {
 
-//     const [selectedPin, updateSelectedPin] = useState(null);
+function Map(props) {
+
+    const [selectedPin, updateSelectedPin] = useState(null);
+    const [people, setPeople] = useState([]);
 
 
-//     return (
-//         <GoogleMap 
-//             defaultZoom={10} 
-//             defaultCenter={{lat:36.166340, lng:-86.779068}}
-//         >
+      // Load all books and store them with setBooks
+  useEffect(() => {
+    loadPeople()
+  }, [])
+
+  // Loads all People and sets them to People
+  function loadPeople() {
+    API.getPeople()
+      .then(res => {
+          console.log(res.data);
+          setPeople(res);
+      }
+      )
+      .catch(err => console.log(err));
+  };
+
+
+
+    return (
+        <Fragment>
+        <GoogleMap 
+            defaultZoom={10} 
+            defaultCenter={{lat:36.166340, lng:-86.779068}}
+            defaultOptions={{styles:mapStyles}}
+        >
+             
+            {patientData.map(patient => (
+                <Marker 
+                key={patient.id} 
+                position={{lat:patient.lat, lng:patient.lng}} 
+                onClick={() => {
+                    updateSelectedPin(patient)
+                }}
+                icon={{
+                    url: "/coronavirus.png",
+                    scaledSize: new window.google.maps.Size(25, 25)
+                }}
+                /> 
+                ))}
+
+            {selectedPin && (
+                <InfoWindow 
+                position={{
+                    lat:selectedPin.lat, lng:selectedPin.lng
+                }} 
+                onCloseClick={() => {
+                    updateSelectedPin(null)
+                }}
+                >
+                    <div>
+                        <h5>ID: {selectedPin.id}</h5>
+                        <p>Name: {selectedPin.name}</p>
+                        <p>Age: {selectedPin.age}</p>
+                        <p>Sex: {selectedPin.sex}</p>
+                        <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
+                    </div>
+                </InfoWindow>
+            )}
+
+        </GoogleMap>
+        </Fragment>
+
+      
+    )
+}
+
+const WrappedMap = withScriptjs(withGoogleMap(Map))
+
+export default function App() {
+    return(
+   
+        <div style={{width:"100vh", height:"80vh"}} className={"mainDiv"}>
+
+            <WrappedMap 
+                googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw"}
+                loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
+                containerElement={<div style={{height:'100%'}} className={"mapContainer"} />}
+                mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
+            >
+               {console.log(patientData)}
+            </WrappedMap>
             
-//             {hospitalData.map(hospital => (
-//                 <Marker 
-//                     key={hospital.id} 
-//                     position={{lat:hospital.lat, lng:hospital.lng}} 
-//                     onClick={() => {
-//                         updateSelectedPin(hospital)
-//                     }}
+        </div>
 
-//                 /> 
-//             ))}
+   
 
-//             {selectedPin && (
-//                 <InfoWindow 
-//                     position={{
-//                         lat:selectedPin.lat, lng:selectedPin.lng
-//                     }} 
-//                     onCloseClick={() => {
-//                         updateSelectedPin(null)
-//                     }}
-//                 >
-//                     <div>
-//                         <h5>ID: {selectedPin.id}</h5>
-//                         <p>Name: {selectedPin.name}</p>
-//                         <p>Age: {selectedPin.age}</p>
-//                         <p>Sex: {selectedPin.sex}</p>
-//                         <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
-//                     </div>
-//                 </InfoWindow>
-//             )}
-
-//         </GoogleMap>
-//     )
-// }
-
-// const WrappedMap = withScriptjs(withGoogleMap(Map))
-
-// export default function App() {
-//     return(
-//         <div style={{width:"100vh", height:"80vh"}}>
-//             <WrappedMap 
-//                 googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw"}
-//                 loadingElement={<div style={{height:'100%'}} />}
-//                 containerElement={<div style={{height:'100%'}} />}
-//                 mapElement={<div style={{height:'100%'}} />}
-//             >
-//                {console.log(hospitalData)}
-//             </WrappedMap>
-            
-//         </div>
-//     )
-// };
+   
+    )
+};
