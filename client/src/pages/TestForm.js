@@ -1,25 +1,13 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import React, { Fragment, useState } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import CoronaDatePicker from '../components/FormComponents/datePicker';
-
-
+import {
+  Avatar, Box, Button, Container, CssBaseline,FormControlLabel, 
+  FormControl, FormLabel, makeStyles, TextField, Typography,
+  Radio, RadioGroup, Grid, Link
+} from '@material-ui/core';
+import { 
+  CoronavirusDatePicker, CoronavirusTextField, CoronavirusRadio, FieldList
+} from "../components/FormComponents";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,23 +30,100 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TestForm() {
-  const [formObject, setFormObject] = useState({
+
+  const [userState, setUserState] = useState({
+    email: "",
+    password: ""
+  });
+
+  //////////// Reminder to create a function for converting dob to age
+  const [personState, setPersonState] = useState({
     firstName: "",
     lastName: "",
-    email: "",
     age: 0,
-    userSex: "female",
-    smokerValue: "never",
-    testResultValue: "positive"
-  })
-  //Handles updating component state when the user types into the input field
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    setFormObject({ ...formObject, [name]: value })
-  };
+    dateOfBirth: new Date(),
+    sex: "female",
+    // lat: 0,
+    // long: 0,
+    smoking: "never",
+    preExistingConditions: "false",
+    listPreExistingConditions: "",
+    sick: "false"
+  });
 
+  const [illnessState, setIllnessState] = useState({
+    tested: "false",
+    dateOfTest: new Date(),
+    dateOfOnset: new Date(),
+    symptoms: "",
+    hospitalized: "false",
+    dateOfHospitalization: new Date(),
+    intensiveCare: "false",
+    death: "false",
+    dateOfRecovery: new Date()
+  })
 
   const classes = useStyles();
+  
+  const fields = FieldList;
+
+  const handleInputChange = (key, value, context) => {
+    switch (context){
+      case "user":
+        setUserState({ ...userState, [key]: value});
+        break;
+      case "person":
+        setPersonState({ ...personState, [key]:value })
+        break;
+      case "illness":
+        setIllnessState({ ...illnessState, [key]:value})
+        break;
+      default:
+        console.log(`unexpected context type: ${context}`);
+    }
+  }
+
+  const getFormFields = () => {
+    return fields.map(field => {
+      const key = field.id;
+      const value = (field.context === "user") ? userState[key] : 
+                    (field.context === "person") ? personState[key] : illnessState[key];
+
+      switch (field.fieldType){
+        case "input":
+          return (<CoronavirusTextField
+            key={key}
+            field={field}
+            value={value}
+            handleChange={(e) => {
+              const {id, value} = e.target;
+              handleInputChange(id, value, field.context);
+            }}
+          />);
+        case "date":
+          return (<CoronavirusDatePicker
+            key={key}
+            field={field}
+            value={value}
+            // Must pass in date as the first property here in order to expose the formatted date (or stringDate)
+            handleChange={(date, stringDate) => handleInputChange(key, stringDate, field.context)}
+          />);
+        case "radio":
+          return (<CoronavirusRadio
+            key={key}
+            field={field}
+            value={value}
+            handleChange={(e) => {
+              const {id, value} = e.target;
+              handleInputChange(id, value, field.context);
+            }}
+          />)
+        default:
+          break;
+      }
+      
+    })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -68,124 +133,13 @@ export default function TestForm() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
-              </Typography>
+          Please enter your test result and some relevant personal information that will help researchers track the spread of coronavirus.
+        </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                value={formObject.firstName}
-                onChange={handleInputChange}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={formObject.lastName}
-                onChange={handleInputChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={formObject.email}
-                onChange={handleInputChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={formObject.password}
-                onChange={handleInputChange}
-              />
-            </Grid>
-            
-            
-            <Grid item xs={12}>
-              <CoronaDatePicker></CoronaDatePicker>
-            </Grid>
-            
-            
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Sex</FormLabel>
-                <RadioGroup aria-label="sex" name="userSex" value={formObject.userSex} onChange={handleInputChange}>
-                  <FormControlLabel value="female" control={<Radio />} label="Female" />
-                  <FormControlLabel value="male" control={<Radio />} label="Male" />
-                  <FormControlLabel value="other" control={<Radio />} label="Other" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Smoking History</FormLabel>
-                <RadioGroup aria-label="smoker" name="smokerValue" value={formObject.smokerValue} onChange={handleInputChange}>
-                  <FormControlLabel value="never" control=
-                    {<Radio />} label="Never Smoked" />
-                  <FormControlLabel value="current" control={<Radio />} label="Currently Smoke" />
-                  <FormControlLabel value="former" control={<Radio />} label="Used to Smoke" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">What was the result of your test for Coronavirus?</FormLabel>
-                <RadioGroup aria-label="smoker" name="testResultValue" value={formObject.testResultValue} onChange={handleInputChange}>
-                  <FormControlLabel value="positive" control=
-                    {<Radio />} label="Postive" />
-                  <FormControlLabel value="negative" control={<Radio />} label="Negative" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">What was the result of your test for Coronavirus?</FormLabel>
-                <RadioGroup aria-label="testResultValue" name="testResultValue" value={formObject.testResultValue} onChange={handleInputChange}>
-                  <FormControlLabel value="positive" control=
-                    {<Radio />} label="Postive" />
-                  <FormControlLabel value="negative" control={<Radio />} label="Negative" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
+
+            {getFormFields()}
+
           </Grid>
           <Button
             type="submit"
@@ -194,7 +148,7 @@ export default function TestForm() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Submit
           </Button>
           {/* Commenting the following out to be used in a later version */}
           {/* <Grid container justify="flex-end">
