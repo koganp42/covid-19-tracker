@@ -10,6 +10,9 @@ import {
 } from "../components/FormComponents/FormFields";
 import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
 
+//import API routes 
+import API from "../utils/API"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +37,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
 
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    await getUserLocation();
+    await createNewUser();
+  }
+
+
+
+
+
+  const createNewUser = () => {
+    const newUser = {
+      email: userState.email,
+      password: userState.password
+    }
+    API.createUser(newUser)
+    .then(console.log("New user created!"))
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
   
   
+
+
   const [userState, setUserState] = useState({
     email: "",
     password: ""
@@ -72,8 +98,8 @@ export default function TestForm() {
   
   const fields = FieldList;
   
-  const getUserLocation = (e) => {
-    e.preventDefault();
+  const getUserLocation = () => {
+
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position){
         console.log(position);
@@ -161,7 +187,7 @@ export default function TestForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={getUserLocation}
+            onClick={formSubmit}
           >
             Submit
           </Button>
