@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
-// import Nav from "./components/Nav";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 import Map from "./pages/Map";
-import Container from '@material-ui/core/Container';
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
@@ -11,6 +11,7 @@ import Footer from "./components/Footer"
 function App() {
   return (
     <Router>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
       <Header />
         <Switch>
@@ -25,7 +26,8 @@ function App() {
             <TestForm />
           </Route>
         </Switch>
-      </div>
+        </div>
+      </MuiPickersUtilsProvider>
     </Router>
   );
 }
