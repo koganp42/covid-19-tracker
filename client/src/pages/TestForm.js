@@ -80,7 +80,7 @@ export default function TestForm() {
       })
     }
   }
-  
+
   const handleInputChange = (key, value, context) => {
     switch (context){
       case "user":
@@ -140,7 +140,7 @@ export default function TestForm() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
