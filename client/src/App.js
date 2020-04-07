@@ -6,10 +6,13 @@ import DateFnsUtils from '@date-io/date-fns';
 import Map from "./pages/Map";
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-
+//Redux
+import { Provider } from 'react-redux'
+import store from './store';
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
@@ -29,6 +32,7 @@ function App() {
         </div>
       </MuiPickersUtilsProvider>
     </Router>
+    </Provider>
   );
 }
 
