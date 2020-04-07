@@ -6,8 +6,11 @@ import {
   Radio, RadioGroup, Grid, Link
 } from '@material-ui/core';
 import { 
-  CoronavirusDatePicker, CoronavirusTextField, CoronavirusRadio, FieldList
-} from "../components/FormComponents";
+   CoronavirusTextField, CoronavirusRadio, FieldList
+} from "../components/FormComponents/FormFields";
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,11 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
 
+  
+  
   const [userState, setUserState] = useState({
     email: "",
     password: ""
   });
-
+  
   //////////// Reminder to create a function for converting dob to age
   const [personState, setPersonState] = useState({
     firstName: "",
@@ -50,7 +55,7 @@ export default function TestForm() {
     listPreExistingConditions: "",
     sick: "false"
   });
-
+  
   const [illnessState, setIllnessState] = useState({
     tested: "false",
     dateOfTest: new Date(),
@@ -62,11 +67,20 @@ export default function TestForm() {
     death: "false",
     dateOfRecovery: new Date()
   })
-
+  
   const classes = useStyles();
   
   const fields = FieldList;
-
+  
+  const getUserLocation = (e) => {
+    e.preventDefault();
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(function(position){
+        console.log(position);
+      })
+    }
+  }
+  
   const handleInputChange = (key, value, context) => {
     switch (context){
       case "user":
@@ -147,6 +161,7 @@ export default function TestForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={getUserLocation}
           >
             Submit
           </Button>

@@ -97,7 +97,7 @@ export default function App() {
         <div style={{width:"100vh", height:"80vh"}} className={"mainDiv"}>
 
             <WrappedMap 
-                googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw"}
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
                 loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
                 containerElement={<div style={{height:'100%'}} className={"mapContainer"} />}
                 mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
