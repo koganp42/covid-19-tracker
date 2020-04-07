@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
@@ -9,6 +10,9 @@ import Footer from "./components/Footer"
 //Redux
 import { Provider } from 'react-redux'
 import store from './store';
+
+require('dotenv').config();
+
 
 function App() {
   return (
