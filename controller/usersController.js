@@ -26,6 +26,11 @@ module.exports = {
             
     },
 
+    authenticate: function(req, res){
+        console.log(req.user); 
+        res.json(req.user); 
+    },
+
     create: function(req, res) {
         console.log(req.body); 
         db.User

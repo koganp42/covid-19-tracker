@@ -9,6 +9,15 @@ export default {
   createUser: function(user) {
     return axios.post("/api/users", user);
   },
+
+  authenticateUser: function(user){
+    return axios.post("/api/users/login", user); 
+  }, 
+
+  checkAuthentication: function(){
+    return axios.get("/api/users/login"); 
+  },
+  
   // Deletes the book with the given id
   deleteBook: function(id) {
     return axios.delete("/api/books/" + id);

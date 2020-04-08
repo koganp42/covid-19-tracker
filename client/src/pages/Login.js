@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { makeStyles , Grid} from '@material-ui/core/styles';
-import { Button } from "@material-ui/core"
+import { Button, responsiveFontSizes } from "@material-ui/core"
 import TextField from '@material-ui/core/TextField';
+import API from "../utils/API"; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,16 +17,33 @@ export default function BasicTextFields() {
   const classes = useStyles();
   const [userInfo, setUserInfo]= useState({email: "", password: ""});  
 
-  //   const handleInputChange= ()=>{
-//     dispatch({type: "handleSearchInput", "searchInput": searchInput.current.value}); 
-//   }
-
   const handleChange= (event)=>{
     const name= event.target.name; 
     const value = event.target.value; 
-    console.log(value); 
-    setUserInfo({...userInfo, [name]: value}); 
-    console.log(userInfo); 
+    setUserInfo({...userInfo, [name]: value});  
+  }
+
+  const handleSubmit= (event)=>{
+    event.preventDefault(); 
+    API.authenticateUser(userInfo)
+      .then(response=>{
+        if (response.status === 200){
+          console.log("Logged in!"); 
+          console.log(response); 
+          //set state to logged in 
+          // this.props.updateUser({
+        //     loggedIn: true,
+        //     username: response.data.email
+        // })
+          //update sate to redirect page
+          // this.setState({redirectTo: '/map'})
+        }
+      })
+      .catch(err=>{
+        console.log(err); 
+        console.log("Error Logging In"); 
+      }); 
+
   }
 
   return (
@@ -45,7 +63,7 @@ export default function BasicTextFields() {
         id="standard-basic" 
         label="password" 
       />
-      <Button variant="contained">Enter</Button>
+      <Button onClick={handleSubmit} variant="contained">Enter</Button>
     </form>
   );
 }
