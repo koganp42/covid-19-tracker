@@ -9,6 +9,14 @@ export default {
   createUser: function(user) {
     return axios.post("/api/users", user);
   },
+
+  createPerson: function(person) {
+    return axios.post("/api/people", person);
+  },
+
+
+
+
   // Deletes the book with the given id
   deleteBook: function(id) {
     return axios.delete("/api/books/" + id);
