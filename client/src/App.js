@@ -1,15 +1,24 @@
+
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import TestForm from "./pages/TestForm";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import Map from "./pages/Map";
+import Login from "./pages/Login";
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+
+//Redux
+import { Provider } from 'react-redux'
+import store from './store';
+
+require('dotenv').config();
 
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
@@ -18,6 +27,10 @@ function App() {
           <Route exact path={["/", "/map"]}>   
             <Map />
             <Footer />
+          </Route>
+          <Route exact path={["/login"]}>   
+            <Login />
+            
           </Route>
           {/* <Route exact path="/users/:id">
             <User />
@@ -29,6 +42,7 @@ function App() {
         </div>
       </MuiPickersUtilsProvider>
     </Router>
+    </Provider>
   );
 }
 

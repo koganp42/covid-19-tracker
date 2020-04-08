@@ -6,8 +6,14 @@ import {
   Radio, RadioGroup, Grid, Link
 } from '@material-ui/core';
 import { 
-  CoronavirusDatePicker, CoronavirusTextField, CoronavirusRadio, FieldList
-} from "../components/FormComponents";
+   CoronavirusTextField, CoronavirusRadio, FieldList
+} from "../components/FormComponents/FormFields";
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
+
+//import API routes 
+import API from "../utils/API"
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,11 +37,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
 
+
+  const formSubmit = async (e, position) => {
+    e.preventDefault();
+    await getUserLocation();
+    await createNewUser();
+
+
+  }
+
+
+
+
+
+  const createNewUser = () => {
+    const newUser = {
+      email: userState.email,
+      password: userState.password
+    }
+    API.createUser(newUser)
+    .then(console.log("New user created!"))
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+  
+  
+
+
   const [userState, setUserState] = useState({
     email: "",
     password: ""
   });
-
+  
   //////////// Reminder to create a function for converting dob to age
   const [personState, setPersonState] = useState({
     firstName: "",
@@ -43,14 +77,14 @@ export default function TestForm() {
     age: 0,
     dateOfBirth: new Date(),
     sex: "female",
-    // lat: 0,
-    // long: 0,
+    lat: 0,
+    long: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
     sick: "false"
   });
-
+  
   const [illnessState, setIllnessState] = useState({
     tested: "false",
     dateOfTest: new Date(),
@@ -62,10 +96,20 @@ export default function TestForm() {
     death: "false",
     dateOfRecovery: new Date()
   })
-
+  
   const classes = useStyles();
   
   const fields = FieldList;
+  
+  const getUserLocation = () => {
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(function(position){
+        console.log(position);
+        setPersonState({...personState, lat:position.coords.latitude, long:position.coords.longitude});
+        // setPersonState({...personState, long:position.coords.longitude})
+      })
+    }
+  }
 
   const handleInputChange = (key, value, context) => {
     switch (context){
@@ -126,7 +170,7 @@ export default function TestForm() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -147,6 +191,7 @@ export default function TestForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={formSubmit}
           >
             Submit
           </Button>
