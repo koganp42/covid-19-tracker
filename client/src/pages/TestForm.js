@@ -10,6 +10,9 @@ import {
 } from "../components/FormComponents/FormFields";
 import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
 
+//import API routes 
+import API from "../utils/API"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +37,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
 
+
+  const formSubmit = async (e, position) => {
+    e.preventDefault();
+    await getUserLocation();
+    await createNewUser();
+
+
+  }
+
+
+
+
+
+  const createNewUser = () => {
+    const newUser = {
+      email: userState.email,
+      password: userState.password
+    }
+    API.createUser(newUser)
+    .then(console.log("New user created!"))
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
   
   
+
+
   const [userState, setUserState] = useState({
     email: "",
     password: ""
@@ -48,8 +77,8 @@ export default function TestForm() {
     age: 0,
     dateOfBirth: new Date(),
     sex: "female",
-    // lat: 0,
-    // long: 0,
+    lat: 0,
+    long: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
@@ -72,11 +101,12 @@ export default function TestForm() {
   
   const fields = FieldList;
   
-  const getUserLocation = (e) => {
-    e.preventDefault();
+  const getUserLocation = () => {
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position){
         console.log(position);
+        setPersonState({...personState, lat:position.coords.latitude, long:position.coords.longitude});
+        // setPersonState({...personState, long:position.coords.longitude})
       })
     }
   }
@@ -161,7 +191,7 @@ export default function TestForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={getUserLocation}
+            onClick={formSubmit}
           >
             Submit
           </Button>

@@ -5,8 +5,10 @@ import TestForm from "./pages/TestForm";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import Map from "./pages/Map";
+import Login from "./pages/Login";
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+
 //Redux
 import { Provider } from 'react-redux'
 import store from './store';
@@ -25,6 +27,10 @@ function App() {
           <Route exact path={["/", "/map"]}>   
             <Map />
             <Footer />
+          </Route>
+          <Route exact path={["/login"]}>   
+            <Login />
+            
           </Route>
           {/* <Route exact path="/users/:id">
             <User />
