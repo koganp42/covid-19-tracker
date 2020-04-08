@@ -37,10 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
 
-  const formSubmit = async (e) => {
+
+  const formSubmit = async (e, position) => {
     e.preventDefault();
     await getUserLocation();
     await createNewUser();
+
+
   }
 
 
@@ -74,8 +77,8 @@ export default function TestForm() {
     age: 0,
     dateOfBirth: new Date(),
     sex: "female",
-    // lat: 0,
-    // long: 0,
+    lat: 0,
+    long: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
@@ -99,10 +102,11 @@ export default function TestForm() {
   const fields = FieldList;
   
   const getUserLocation = () => {
-
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position){
         console.log(position);
+        setPersonState({...personState, lat:position.coords.latitude, long:position.coords.longitude});
+        // setPersonState({...personState, long:position.coords.longitude})
       })
     }
   }
