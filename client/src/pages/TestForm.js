@@ -188,7 +188,7 @@ export default function TestForm() {
             value={value}
             handleChange={(e) => {
               const {id, value} = e.target;
-              handleInputChange(id, value, field.context);
+              handleInputChange(key, value, field.context);
             }}
           />)
         default:
