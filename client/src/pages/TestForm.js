@@ -8,7 +8,7 @@ import {
 import { 
    CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
-import {CoronavirusDatePicker} from "../components/FormComponents/datePickers/datePicker";
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
 
 //import API routes 
 import API from "../utils/API"
@@ -42,9 +42,12 @@ export default function TestForm() {
     e.preventDefault();
     await getUserLocation();
     await createNewUser();
-    await createNewPerson();
+
 
   }
+
+
+
 
 
   const createNewUser = () => {
@@ -53,42 +56,11 @@ export default function TestForm() {
       password: userState.password
     }
     API.createUser(newUser)
-    .then(result=>{
-      console.log(result);
-      setPersonState({...personState, userID: result.data.id})
-  })
-  // setPersonState({...personState, [userID]:res.id}))
+    .then(console.log("New user created!"))
     .catch(function(err) {
       console.log(err);
     })
   }
-
-  const createNewPerson = () => {
-    const newPerson = {
-    firstName: personState.firstName,
-    lastName: personState.lastName,
-    age: personState.age,
-    dateOfBirth: personState.dateOfBirth,
-    sex: personState.sex,
-    lat: personState.lat,
-    long: personState.long,
-    smoking: personState.smoking,
-    preExistingConditions: personState.preExistingConditions,
-    listPreExistingConditions: personState.listPreExistingConditions,
-    sick: personState.sick,
-    UserId: personState.userID
-    }
-    API.createPerson(newPerson)
-    .then(
-      (res) => {
-        console.log(res);
-      }
-    )
-    .catch(function(err) {
-      console.log(err);
-    })
-  }
-
   
   
 
@@ -110,8 +82,7 @@ export default function TestForm() {
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
-    sick: "false",
-    userID: 0 
+    sick: "false"
   });
   
   const [illnessState, setIllnessState] = useState({
