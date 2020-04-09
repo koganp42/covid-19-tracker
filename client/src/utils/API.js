@@ -9,11 +9,19 @@ export default {
   createUser: function(user) {
     return axios.post("/api/users", user);
   },
-  // Saves new user's Person table data
+
+  authenticateUser: function(user){
+    return axios.post("/api/users/login", user); 
+  }, 
+
+  checkAuthentication: function(){
+    return axios.get("/api/users/login"); 
+  },
+  
   createPerson: function(person) {
     return axios.post("/api/people", person);
   },
-  // Saves new user's Illness table data
+
   createIllness: function(illness) {
     return axios.post("/api/illness", illness);
   }

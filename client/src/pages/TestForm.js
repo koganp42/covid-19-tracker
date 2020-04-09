@@ -1,14 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  Avatar, Box, Button, Container, CssBaseline,FormControlLabel, 
-  FormControl, FormLabel, makeStyles, TextField, Typography,
-  Radio, RadioGroup, Grid, Link
+  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, Link
 } from '@material-ui/core';
-import { 
-   CoronavirusTextField, CoronavirusRadio, FieldList
+import {
+  CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
-import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers"
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers/datePicker";
 
 //import API routes 
 import API from "../utils/API"
@@ -38,38 +36,98 @@ const useStyles = makeStyles((theme) => ({
 export default function TestForm() {
 
 
+  // async formSubmit() {
+  //   const authenticated = await this.props.auth.isAuthenticated();
+  //   if (authenticated !== this.state.authenticated) {
+  //     const user = await this.props.auth.getUser();
+  //     this.setState({ authenticated, user });
+  //   }
+  // }
+
   const formSubmit = async (e, position) => {
     e.preventDefault();
-    await getUserLocation();
-    await createNewUser();
+    let currentPerson = personState;
+    let userLocation = await getUserLocation();
+    console.log(userLocation);
+    let newUserCall = await createNewUser();
+    let newPersonCall = await createNewPerson();
+    //let newIllnessCall = await createNewIllness();
 
 
   }
 
-
-
-
-
-  const createNewUser = () => {
-    const newUser = {
-      email: userState.email,
-      password: userState.password
+  const getUserLocation = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async function (position) {
+        console.log(`1st function:`);
+        console.log(position)
+        return await setPersonState({ ...personState, lat: position.coords.latitude, long: position.coords.longitude });
+      })
     }
-    API.createUser(newUser)
-    .then(console.log("New user created!"))
-    .catch(function(err) {
-      console.log(err);
-    })
   }
-  
-  
 
+  const createNewUser = async () => {
+    API.createUser(userState)
+      .then(result => {
+        console.log(`2nd function:`);
+        console.log(result);
+        setPersonState({ ...personState, UserID: result.data.id });
+        //setIllnessState({ ...illnessState, UserID: result.data.id });
+        return result;
+      })
+      // setPersonState({...personState, [userID]:res.id}))
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  const createNewPerson = async () => {
+    let newPerson = {
+      firstName: personState.firstName,
+      lastName: personState.lastName,
+      age: personState.age,
+      dateOfBirth: personState.dateOfBirth,
+      sex: personState.sex,
+      lat: personState.lat,
+      long: personState.long,
+      smoking: personState.smoking,
+      preExistingConditions: personState.preExistingConditions,
+      listPreExistingConditions: personState.listPreExistingConditions,
+      sick: personState.sick,
+      UserID: personState.UserID
+    }
+    API.createPerson(personState)
+      .then(result => {
+        console.log(`3rd function:`);
+        console.log(result);
+        return result;
+      }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  // const createNewIllness = async () => {
+
+  //   API.createIllness(illnessState)
+  //     .then(
+  //       (result) => {
+  //         console.log(`4th function:`);
+  //         console.log(result);
+  //         return result;
+  //       }
+  //     )
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     })
+  // }
 
   const [userState, setUserState] = useState({
     email: "",
     password: ""
   });
-  
+
   //////////// Reminder to create a function for converting dob to age
   const [personState, setPersonState] = useState({
     firstName: "",
@@ -82,9 +140,10 @@ export default function TestForm() {
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
-    sick: "false"
+    sick: "false",
+    UserID: 0
   });
-  
+
   const [illnessState, setIllnessState] = useState({
     tested: "false",
     dateOfTest: new Date(),
@@ -94,33 +153,24 @@ export default function TestForm() {
     dateOfHospitalization: new Date(),
     intensiveCare: "false",
     death: "false",
-    dateOfRecovery: new Date()
+    dateOfRecovery: new Date(),
+    UserID: 0
   })
-  
+
   const classes = useStyles();
-  
+
   const fields = FieldList;
-  
-  const getUserLocation = () => {
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(function(position){
-        console.log(position);
-        setPersonState({...personState, lat:position.coords.latitude, long:position.coords.longitude});
-        // setPersonState({...personState, long:position.coords.longitude})
-      })
-    }
-  }
 
   const handleInputChange = (key, value, context) => {
-    switch (context){
+    switch (context) {
       case "user":
-        setUserState({ ...userState, [key]: value});
+        setUserState({ ...userState, [key]: value });
         break;
       case "person":
-        setPersonState({ ...personState, [key]:value })
+        setPersonState({ ...personState, [key]: value })
         break;
       case "illness":
-        setIllnessState({ ...illnessState, [key]:value})
+        setIllnessState({ ...illnessState, [key]: value })
         break;
       default:
         console.log(`unexpected context type: ${context}`);
@@ -130,17 +180,17 @@ export default function TestForm() {
   const getFormFields = () => {
     return fields.map(field => {
       const key = field.id;
-      const value = (field.context === "user") ? userState[key] : 
-                    (field.context === "person") ? personState[key] : illnessState[key];
+      const value = (field.context === "user") ? userState[key] :
+        (field.context === "person") ? personState[key] : illnessState[key];
 
-      switch (field.fieldType){
+      switch (field.fieldType) {
         case "input":
           return (<CoronavirusTextField
             key={key}
             field={field}
             value={value}
             handleChange={(e) => {
-              const {id, value} = e.target;
+              const { id, value } = e.target;
               handleInputChange(id, value, field.context);
             }}
           />);
@@ -158,14 +208,14 @@ export default function TestForm() {
             field={field}
             value={value}
             handleChange={(e) => {
-              const {id, value} = e.target;
+              const { id, value } = e.target;
               handleInputChange(key, value, field.context);
             }}
           />)
         default:
           break;
       }
-      
+
     })
   }
 
