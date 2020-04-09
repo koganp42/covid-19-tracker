@@ -8,6 +8,7 @@ import Map from "./pages/Map";
 import Login from "./pages/Login";
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+// import {LoggedInProvider} from "./utils/GlobalState"; 
 
 //Redux
 import { Provider } from 'react-redux'
@@ -19,6 +20,7 @@ require('dotenv').config();
 function App() {
   return (
     <Provider store={store}>
+    {/* <LoggedInProvider> */}
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
@@ -42,6 +44,7 @@ function App() {
         </div>
       </MuiPickersUtilsProvider>
     </Router>
+    {/* </LoggedInProvider>  */}
     </Provider>
   );
 }

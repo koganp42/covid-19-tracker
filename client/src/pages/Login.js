@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles , Grid} from '@material-ui/core/styles';
 import { Button, responsiveFontSizes } from "@material-ui/core"
 import TextField from '@material-ui/core/TextField';
 import API from "../utils/API"; 
+import {Redirect} from "react-router-dom"; 
+// import {useLoggedInContext} from "../utils/GlobalState"; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +18,26 @@ const useStyles = makeStyles((theme) => ({
 export default function BasicTextFields() {
   const classes = useStyles();
   const [userInfo, setUserInfo]= useState({email: "", password: ""});  
+  const [redirect, setRedirect] = useState( null); 
+  // const [state, dispatch] = useLoggedInContext(); 
+
+  useEffect(()=>{ 
+    console.log("Check check"); 
+    API.checkAuthentication()
+        .then(response=>{
+            console.log(response);
+            if (response.data) {
+                console.log("logged in"); 
+                setRedirect(null); 
+                console.log(redirect); 
+            } else {
+                console.log("Not logged in!"); 
+                setRedirect(null); 
+                console.log(redirect); 
+            }
+        })
+        .catch(err=>console.log(err)); 
+}, [redirect])
 
   const handleChange= (event)=>{
     const name= event.target.name; 
@@ -30,6 +52,9 @@ export default function BasicTextFields() {
         if (response.status === 200){
           console.log("Logged in!"); 
           console.log(response); 
+          setRedirect("/map"); 
+          console.log(redirect); 
+          // setRedirect({redirect: '/map'}); 
           //set state to logged in 
           // this.props.updateUser({
         //     loggedIn: true,
@@ -42,28 +67,34 @@ export default function BasicTextFields() {
       .catch(err=>{
         console.log(err); 
         console.log("Error Logging In"); 
+        setRedirect(null); 
+        console.log(redirect); 
       }); 
 
   }
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-        <h2>Login</h2>
-      <TextField 
-        value= {userInfo.email} 
-        name="email"
-        onChange={handleChange}
-        id="standard-basic" 
-        label="email" 
-      />
-      <TextField 
-        value= {userInfo.password} 
-        name="password"
-        onChange={handleChange}
-        id="standard-basic" 
-        label="password" 
-      />
-      <Button onClick={handleSubmit} variant="contained">Enter</Button>
-    </form>
+    <div>
+      { redirect !== null ? ( <Redirect to= {redirect}/>) : (
+          <form className={classes.root} noValidate autoComplete="off">
+              <h2>Login</h2>
+            <TextField 
+              value= {userInfo.email} 
+              name="email"
+              onChange={handleChange}
+              id="standard-basic" 
+              label="email" 
+            />
+            <TextField 
+              value= {userInfo.password} 
+              name="password"
+              onChange={handleChange}
+              id="standard-basic" 
+              label="password" 
+            />
+            <Button onClick={handleSubmit} variant="contained">Enter</Button>
+          </form>) }
+    </div>
+    
   );
 }
