@@ -20,5 +20,9 @@ export default {
   
   createPerson: function(person) {
     return axios.post("/api/people", person);
+  },
+
+  createIllness: function(illness) {
+    return axios.post("/api/illness", illness);
   }
 };
