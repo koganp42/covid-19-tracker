@@ -6,7 +6,7 @@ import {
 import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
-import { CoronavirusDatePicker } from "../components/FormComponents/DatePickers/datePicker";
+import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
 
 //import API routes 
 import API from "../utils/API"
@@ -46,33 +46,32 @@ export default function TestForm() {
 
   const formSubmit = async (e, position) => {
     e.preventDefault();
-    let currentPerson = personState;
-    let userLocation = await getUserLocation();
-    console.log(userLocation);
-    let newUserCall = await createNewUser();
-    let newPersonCall = await createNewPerson();
+    await getUserLocation();
+    // await createNewUser();
+    await createNewPerson();
     //let newIllnessCall = await createNewIllness();
 
 
   }
 
-  const getUserLocation = async () => {
+  const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async function (position) {
         console.log(`1st function:`);
         console.log(position)
-        return await setPersonState({ ...personState, lat: position.coords.latitude, long: position.coords.longitude });
+         setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
+         
       })
     }
   }
 
-  const createNewUser = async () => {
+  const createNewUser = () => {
     API.createUser(userState)
       .then(result => {
         console.log(`2nd function:`);
         console.log(result);
         setPersonState({ ...personState, UserID: result.data.id });
-        //setIllnessState({ ...illnessState, UserID: result.data.id });
+        setIllnessState({ ...illnessState, UserID: result.data.id });
         return result;
       })
       // setPersonState({...personState, [userID]:res.id}))
@@ -81,21 +80,8 @@ export default function TestForm() {
       })
   }
 
-  const createNewPerson = async () => {
-    let newPerson = {
-      firstName: personState.firstName,
-      lastName: personState.lastName,
-      age: personState.age,
-      dateOfBirth: personState.dateOfBirth,
-      sex: personState.sex,
-      lat: personState.lat,
-      long: personState.long,
-      smoking: personState.smoking,
-      preExistingConditions: personState.preExistingConditions,
-      listPreExistingConditions: personState.listPreExistingConditions,
-      sick: personState.sick,
-      UserID: personState.UserID
-    }
+  const createNewPerson = () => {
+
     API.createPerson(personState)
       .then(result => {
         console.log(`3rd function:`);
@@ -136,7 +122,7 @@ export default function TestForm() {
     dateOfBirth: new Date(),
     sex: "female",
     lat: 0,
-    long: 0,
+    lon: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
