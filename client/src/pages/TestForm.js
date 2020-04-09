@@ -8,7 +8,7 @@ import {
 import { 
    CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
-import {CoronavirusDatePicker} from "../components/FormComponents/datePickers/datePicker";
+import {CoronavirusDatePicker} from "../components/FormComponents/datePickers/DatePicker";
 
 //import API routes 
 import API from "../utils/API"
