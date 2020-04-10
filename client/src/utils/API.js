@@ -23,7 +23,7 @@ export default {
   },
 
   createIllness: function(illness) {
-    return axios.post("/api/illness", illness);
+    return axios.post("/api/illnesses", illness);
   }
   
 };
