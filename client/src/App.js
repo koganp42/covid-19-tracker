@@ -34,6 +34,9 @@ function App() {
             <Map />
             <Footer />
           </Route>
+          <Route exact path={["/login"]}>   
+            <Login />
+          </Route>
           {/* <Route exact path="/users/:id">
             <User />
           </Route> */}
