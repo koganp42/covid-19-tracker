@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   toolBar: {
     background: 'linear-gradient(45deg, #6c63ff 30%, #92e8f8 90%)',
 
+  },
+  link: {
+    margin: 15,
   }
 }));
 
@@ -38,8 +41,10 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Covid-19 Tracker
           </Typography>
-
-          <Link to="/TestForm">Back to Form</Link>
+          
+          <Link className={classes.link} to="/logout">Log Out</Link>
+          
+          <Link className={classes.link} to="/TestForm">Back to Form</Link>
 
         </Toolbar>
       </AppBar>

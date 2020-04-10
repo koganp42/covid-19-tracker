@@ -32,7 +32,6 @@ function App() {
           </Route>
           <Route exact path={["/login"]}>   
             <Login />
-            
           </Route>
           {/* <Route exact path="/users/:id">
             <User />
