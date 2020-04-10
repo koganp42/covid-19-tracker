@@ -49,65 +49,59 @@ export default function TestForm() {
   let newPersonEntry;
   let newIllnessEntry;
 
-  const formSubmit = (e, position) => {
-    e.preventDefault();
-    fetch(createNewUser).then( response => {
-      if (response.ok) {
-        return response;
-      } else {
-        return Promise.reject(response);
-      }
-    }).then( newUser => {
-      newUserEntry = newUser
-      setPersonState({ ...personState, UserId: newUser.data.id });
-      return fetch(getUserLocation);
+  // const formSubmit = (e, position) => {
+  //   e.preventDefault();
+  //   fetch(createNewUser).then( response => {
+  //     if (response.ok) {
+  //       return response;
+  //     } else {
+  //       return Promise.reject(response);
+  //     }
+  //   }).then( newUser => {
+  //     newUserEntry = newUser
+  //     setPersonState({ ...personState, UserId: newUser.data.id });
+  //     return fetch(getUserLocation);
 
-    }).then( response => {
-      if (response.ok) {
-        return response;
-      } else {
-        return Promise.reject(response);
-      }
-    }).then( position => {
-      console.log(position);
-      setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
-      return fetch(createNewPerson);
+  //   }).then( response => {
+  //     if (response.ok) {
+  //       return response;
+  //     } else {
+  //       return Promise.reject(response);
+  //     }
+  //   }).then( position => {
+  //     console.log(position);
+  //     setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
+  //     return fetch(createNewPerson);
 
-    }).then( response => {
-      if (response.ok) {
-        return response;
-      } else {
-        return Promise.reject(response);
-      }
-    }).then( newPerson => {
-      newPersonEntry = newPerson;
-      setIllnessState({ ...illnessState, PersonId: newPerson.data.id });
-      return fetch(createNewIllness);
+  //   }).then( response => {
+  //     if (response.ok) {
+  //       return response;
+  //     } else {
+  //       return Promise.reject(response);
+  //     }
+  //   }).then( newPerson => {
+  //     newPersonEntry = newPerson;
+  //     setIllnessState({ ...illnessState, PersonId: newPerson.data.id });
+  //     return fetch(createNewIllness);
 
-    }).then( response => {
-      if (response.ok) {
-        return response;
-      } else {
-        return Promise.reject(response);
-      }
-    }).then( newIllness => {
-      newIllnessEntry = newIllness;
-      console.log(newUserEntry, newPersonEntry, newIllnessEntry);
-    }).catch(function (error) {
-      console.warn(error);
-    });
+  //   }).then( response => {
+  //     if (response.ok) {
+  //       return response;
+  //     } else {
+  //       return Promise.reject(response);
+  //     }
+  //   }).then( newIllness => {
+  //     newIllnessEntry = newIllness;
+  //     console.log(newUserEntry, newPersonEntry, newIllnessEntry);
+  //   }).catch(function (error) {
+  //     console.warn(error);
+  //   });
 
-  }
-
-  // const getUserLocation = () => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(async function (position) {
-  //       console.log(`1st function:`);
-  //       console.log(position)
-  //       return setPersonState({ ...personState, lat: position.coords.latitude, long: position.coords.longitude });
-  //     })
-  //   }
   // }
+
+  const formSubmit = () => {
+    return console.log("I don't do anything yet!");
+  };
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -118,18 +112,6 @@ export default function TestForm() {
       })
     }
   };
-
-  const createNewUser = () => {
-    API.createUser(userState)
-      .then(result => {
-        // console.log(`2nd function:`);
-        // console.log(result);
-        return result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
 
   const createNewPerson = () => {
     API.createPerson(personState)
@@ -160,11 +142,6 @@ export default function TestForm() {
         console.log(err);
       })
   }
-
-  const [userState, setUserState] = useState({
-    email: "",
-    password: ""
-  });
 
   //////////// Reminder to create a function for converting dob to age
   const [personState, setPersonState] = useState({
@@ -201,9 +178,6 @@ export default function TestForm() {
 
   const handleInputChange = (key, value, context) => {
     switch (context) {
-      case "user":
-        setUserState({ ...userState, [key]: value });
-        break;
       case "person":
         setPersonState({ ...personState, [key]: value })
         break;
@@ -218,8 +192,7 @@ export default function TestForm() {
   const getFormFields = () => {
     return fields.map(field => {
       const key = field.id;
-      const value = (field.context === "user") ? userState[key] :
-        (field.context === "person") ? personState[key] : illnessState[key];
+      const value = (field.context === "person") ? personState[key] : illnessState[key];
 
       switch (field.fieldType) {
         case "input":

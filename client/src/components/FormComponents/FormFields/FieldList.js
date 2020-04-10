@@ -3,26 +3,26 @@
             //////  Each input is generated according to the fieldType attribute //////
 
 export const FieldList = [
-    {
-        context: "user",
-        fieldType: "input",
-        id: "email",
-        label: "Email Address",
-        type: "email",
-        autoComplete: "email",
-        fullWidth: true,
-        required: true
-    },
-    {
-        context: "user",
-        fieldType: "input",
-        id: "password",
-        label: "Password",
-        type: "password",
-        autoComplete: "current-password",
-        fullWidth: true,
-        required: true
-    },
+    // {
+    //     context: "user",
+    //     fieldType: "input",
+    //     id: "email",
+    //     label: "Email Address",
+    //     type: "email",
+    //     autoComplete: "email",
+    //     fullWidth: true,
+    //     required: true
+    // },
+    // {
+    //     context: "user",
+    //     fieldType: "input",
+    //     id: "password",
+    //     label: "Password",
+    //     type: "password",
+    //     autoComplete: "current-password",
+    //     fullWidth: true,
+    //     required: true
+    // },
     {
         context: "person",
         fieldType: "input",
