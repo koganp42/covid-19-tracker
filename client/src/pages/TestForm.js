@@ -6,7 +6,9 @@ import {
 import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
-import {CoronavirusDatePicker} from "../components/FormComponents/datePickers/DatePicker";
+
+import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
+
 
 //import API routes 
 import API from "../utils/API"
@@ -43,62 +45,99 @@ export default function TestForm() {
   //     this.setState({ authenticated, user });
   //   }
   // }
+  let newUserEntry;
+  let newPersonEntry;
+  let newIllnessEntry;
 
-  const formSubmit = async (e, position) => {
+  const formSubmit = (e, position) => {
     e.preventDefault();
-    let currentPerson = personState;
-    let userLocation = await getUserLocation();
-    console.log(userLocation);
-    let newUserCall = await createNewUser();
-    let newPersonCall = await createNewPerson();
-    //let newIllnessCall = await createNewIllness();
+    fetch(createNewUser).then( response => {
+      if (response.ok) {
+        return response;
+      } else {
+        return Promise.reject(response);
+      }
+    }).then( newUser => {
+      newUserEntry = newUser
+      setPersonState({ ...personState, UserId: newUser.data.id });
+      return fetch(getUserLocation);
+
+    }).then( response => {
+      if (response.ok) {
+        return response;
+      } else {
+        return Promise.reject(response);
+      }
+    }).then( position => {
+      console.log(position);
+      setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
+      return fetch(createNewPerson);
+
+    }).then( response => {
+      if (response.ok) {
+        return response;
+      } else {
+        return Promise.reject(response);
+      }
+    }).then( newPerson => {
+      newPersonEntry = newPerson;
+      setIllnessState({ ...illnessState, PersonId: newPerson.data.id });
+      return fetch(createNewIllness);
+
+    }).then( response => {
+      if (response.ok) {
+        return response;
+      } else {
+        return Promise.reject(response);
+      }
+    }).then( newIllness => {
+      newIllnessEntry = newIllness;
+      console.log(newUserEntry, newPersonEntry, newIllnessEntry);
+    }).catch(function (error) {
+      console.warn(error);
+    });
 
   }
 
-  const getUserLocation = async () => {
+  // const getUserLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(async function (position) {
+  //       console.log(`1st function:`);
+  //       console.log(position)
+  //       return setPersonState({ ...personState, lat: position.coords.latitude, long: position.coords.longitude });
+  //     })
+  //   }
+  // }
+
+  const getUserLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async function (position) {
-        console.log(`1st function:`);
-        console.log(position)
-        return await setPersonState({ ...personState, lat: position.coords.latitude, long: position.coords.longitude });
+      navigator.geolocation.getCurrentPosition(function (position) {
+        // console.log(`1st function:`);
+        // console.log(position);
+        return position;
       })
     }
-  }
+  };
 
-  const createNewUser = async () => {
+  const createNewUser = () => {
     API.createUser(userState)
       .then(result => {
-        console.log(`2nd function:`);
-        console.log(result);
-        setPersonState({ ...personState, UserID: result.data.id });
-        //setIllnessState({ ...illnessState, UserID: result.data.id });
+        // console.log(`2nd function:`);
+        // console.log(result);
         return result;
       })
-      // setPersonState({...personState, [userID]:res.id}))
       .catch(function (err) {
         console.log(err);
       })
   }
 
-  const createNewPerson = async () => {
-    let newPerson = {
-      firstName: personState.firstName,
-      lastName: personState.lastName,
-      age: personState.age,
-      dateOfBirth: personState.dateOfBirth,
-      sex: personState.sex,
-      lat: personState.lat,
-      long: personState.long,
-      smoking: personState.smoking,
-      preExistingConditions: personState.preExistingConditions,
-      listPreExistingConditions: personState.listPreExistingConditions,
-      sick: personState.sick,
-      UserID: personState.UserID
-    }
+  const createNewPerson = () => {
     API.createPerson(personState)
       .then(result => {
-        console.log(`3rd function:`);
-        console.log(result);
+        // console.log(`3rd function:`);
+        // console.log(result)
+        setIllnessState({ ...illnessState, PersonId: result.data.id });;
+        // createNewIllness();
         return result;
       }
       )
@@ -107,20 +146,20 @@ export default function TestForm() {
       })
   }
 
-  // const createNewIllness = async () => {
+  const createNewIllness = async () => {
 
-  //   API.createIllness(illnessState)
-  //     .then(
-  //       (result) => {
-  //         console.log(`4th function:`);
-  //         console.log(result);
-  //         return result;
-  //       }
-  //     )
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     })
-  // }
+    API.createIllness(illnessState)
+      .then(
+        (result) => {
+          // console.log(`4th function:`);
+          // console.log(result);
+          return result;
+        }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
 
   const [userState, setUserState] = useState({
     email: "",
@@ -135,12 +174,12 @@ export default function TestForm() {
     dateOfBirth: new Date(),
     sex: "female",
     lat: 0,
-    long: 0,
+    lon: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
     sick: "false",
-    UserID: 0
+    UserId: 0
   });
 
   const [illnessState, setIllnessState] = useState({
@@ -153,7 +192,7 @@ export default function TestForm() {
     intensiveCare: "false",
     death: "false",
     dateOfRecovery: new Date(),
-    UserID: 0
+    PeopleId: 0
   })
 
   const classes = useStyles();
