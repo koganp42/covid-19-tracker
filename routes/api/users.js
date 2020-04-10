@@ -13,6 +13,10 @@ router.route("/login")
     .post(passport.authenticate("local"), usersController.authenticate)
     .get(usersController.checkAuthentication); 
 
+
+router.route("/logout")
+    .get(usersController.logOut); 
+
  //Matches with "/api/users/:id"
 router.route("/:id")
     .get(isAuthenticated, usersController.findById)

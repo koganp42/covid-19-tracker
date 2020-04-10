@@ -41,6 +41,12 @@ module.exports = {
         res.json(req.user);
     },
 
+    logOut: function(req, res) {
+        console.log("logging out"); 
+        req.logout();
+        res.redirect("/"); 
+      },
+
     create: function(req, res) {
         console.log(req.body); 
         db.User

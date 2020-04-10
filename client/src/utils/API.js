@@ -17,6 +17,10 @@ export default {
   checkAuthentication: function(){
     return axios.get("/api/users/login"); 
   },
+
+  logOut: function(){
+    return axios.get("/api/users/logout"); 
+  },
   
   createPerson: function(person) {
     return axios.post("/api/people", person);
