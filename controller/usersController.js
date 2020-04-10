@@ -31,6 +31,16 @@ module.exports = {
         res.json(req.user); 
     },
 
+    checkAuthentication: function (req, res){
+        console.log(req.user); 
+        if (req.user){
+            console.log("logged in!")
+        } else if (!req.user){
+            console.log("not logged in")
+        }
+        res.json(req.user);
+    },
+
     create: function(req, res) {
         console.log(req.body); 
         db.User
