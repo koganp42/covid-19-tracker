@@ -5,7 +5,7 @@ export default {
   getPeople: function() {
     return axios.get("/api/people");
   },
-  // Gets the book with the given id
+  // Creates new user
   createUser: function(user) {
     return axios.post("/api/users", user);
   },
@@ -24,5 +24,10 @@ export default {
   
   createPerson: function(person) {
     return axios.post("/api/people", person);
+  },
+
+  createIllness: function(illness) {
+    return axios.post("/api/illnesses", illness);
   }
+  
 };
