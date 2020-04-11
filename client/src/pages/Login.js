@@ -51,9 +51,11 @@ export default function BasicTextFields() {
       .then(response=>{
         if (response.status === 200){
           console.log("Logged in!"); 
-          console.log(response); 
-          setRedirect("/map"); 
-          console.log(redirect); 
+          console.log(response);
+          localStorage.setItem("currentUserId", response.data.id)
+          setRedirect("/testForm"); 
+          // console.log(redirect); 
+          // console.log(userInfo);
           // setRedirect({redirect: '/map'}); 
           //set state to logged in 
           // this.props.updateUser({
@@ -84,6 +86,7 @@ export default function BasicTextFields() {
               onChange={handleChange}
               id="standard-basic" 
               label="email" 
+              type="email"
             />
             <TextField 
               value= {userInfo.password} 
@@ -91,6 +94,7 @@ export default function BasicTextFields() {
               onChange={handleChange}
               id="standard-basic" 
               label="password" 
+              type="password"
             />
             <Button onClick={handleSubmit} variant="contained">Enter</Button>
           </form>) }
