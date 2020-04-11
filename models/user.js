@@ -16,6 +16,20 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: false,
+            set: function(value) {
+              if (value === 'true') value = true;
+              if (value === 'false') value = false;
+              this.setDataValue('admin', value);
+            }
+    },
+    adminPassword: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
@@ -32,9 +46,18 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   User.addHook("beforeCreate", function(user) {
-    console.log(user); 
-    console.log("That is the user"); 
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    if (user.admin && user.adminPassword){
+      if (user.adminPassword === "admin"){
+        user.adminPassword = bcrypt.hashSync(user.adminPassword, bcrypt.genSaltSync(10), null);
+      } else {
+        user.admin = false; 
+        user.adminPassword= ""; 
+      }
+    }
+    if (user.admin && !user.adminPassword){
+      user.admin= false; 
+    }
   });
 
   User.addHook("beforeBulkUpdate", function(user) {
