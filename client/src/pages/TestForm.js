@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
   Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, Link
@@ -6,6 +6,7 @@ import {
 import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
+import { Redirect } from "react-router-dom";
 
 import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
 
@@ -36,115 +37,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TestForm() {
-
-
-  // async formSubmit() {
-  //   const authenticated = await this.props.auth.isAuthenticated();
-  //   if (authenticated !== this.state.authenticated) {
-  //     const user = await this.props.auth.getUser();
-  //     this.setState({ authenticated, user });
-  //   }
-  // }
-  let newUserEntry;
-  let newPersonEntry;
-  let newIllnessEntry;
-
-  // const formSubmit = (e, position) => {
-  //   e.preventDefault();
-  //   fetch(createNewUser).then( response => {
-  //     if (response.ok) {
-  //       return response;
-  //     } else {
-  //       return Promise.reject(response);
-  //     }
-  //   }).then( newUser => {
-  //     newUserEntry = newUser
-  //     setPersonState({ ...personState, UserId: newUser.data.id });
-  //     return fetch(getUserLocation);
-
-  //   }).then( response => {
-  //     if (response.ok) {
-  //       return response;
-  //     } else {
-  //       return Promise.reject(response);
-  //     }
-  //   }).then( position => {
-  //     console.log(position);
-  //     setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
-  //     return fetch(createNewPerson);
-
-  //   }).then( response => {
-  //     if (response.ok) {
-  //       return response;
-  //     } else {
-  //       return Promise.reject(response);
-  //     }
-  //   }).then( newPerson => {
-  //     newPersonEntry = newPerson;
-  //     setIllnessState({ ...illnessState, PersonId: newPerson.data.id });
-  //     return fetch(createNewIllness);
-
-  //   }).then( response => {
-  //     if (response.ok) {
-  //       return response;
-  //     } else {
-  //       return Promise.reject(response);
-  //     }
-  //   }).then( newIllness => {
-  //     newIllnessEntry = newIllness;
-  //     console.log(newUserEntry, newPersonEntry, newIllnessEntry);
-  //   }).catch(function (error) {
-  //     console.warn(error);
-  //   });
-
-  // }
-
-  const formSubmit = () => {
-    return console.log("I don't do anything yet!");
-  };
-
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        // console.log(`1st function:`);
-        // console.log(position);
-        return position;
-      })
-    }
-  };
-
-  const createNewPerson = () => {
-    API.createPerson(personState)
-      .then(result => {
-        // console.log(`3rd function:`);
-        // console.log(result)
-        setIllnessState({ ...illnessState, PersonId: result.data.id });;
-        // createNewIllness();
-        return result;
-      }
-      )
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-
-  const createNewIllness = async () => {
-
-    API.createIllness(illnessState)
-      .then(
-        (result) => {
-          // console.log(`4th function:`);
-          // console.log(result);
-          return result;
-        }
-      )
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-
   //////////// Reminder to create a function for converting dob to age
-  const [personState, setPersonState] = useState({
+  const [personState, setPersonState] = useState(   {
     firstName: "",
     lastName: "",
     age: 0,
@@ -158,7 +52,7 @@ export default function TestForm() {
     sick: "false",
     UserId: 0
   });
-
+  const [formFields, setFormFields] = useState([]);
   const [illnessState, setIllnessState] = useState({
     tested: "false",
     dateOfTest: new Date(),
@@ -170,7 +64,119 @@ export default function TestForm() {
     death: "false",
     dateOfRecovery: new Date(),
     PeopleId: 0
-  })
+  });
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  let UserId;
+  useEffect(
+    () => {
+      UserId = parseInt(localStorage.getItem('currentUserId'))
+      setLoggedIn((UserId != NaN));
+      //if (loggedIn){
+      setPersonState({ ...personState, UserId });
+      getPeople();
+      //setIllnessState({ ...illnessState, UserId });
+      getUserLocation();
+      //}
+    },
+    [personState.UserId],
+  );
+
+  
+
+  const [redirect, setRedirect] = useState(null);
+  // API.authenticateUser(userInfo)
+  //     .then(response=>{
+  //       if (response.status === 200){
+  //         console.log("Logged in!"); 
+  //         console.log(response);
+  //         console.log(redirect);
+  //         return response; 
+  //         // setRedirect({redirect: '/map'}); 
+  //         //set state to logged in 
+  //         // this.props.updateUser({
+  //       //     loggedIn: true,
+  //       //     username: response.data.email
+  //       // })
+  //         //update sate to redirect page
+  //         // this.setState({redirectTo: '/map'})
+  //       }
+  //     })
+  //     .catch(err=>{
+  //       console.log(err); 
+  //       console.log("Error Logging In"); 
+  //       setRedirect("/login"); 
+  //     }); 
+
+  // async formSubmit() {
+  //   const authenticated = await this.props.auth.isAuthenticated();
+  //   if (authenticated !== this.state.authenticated) {
+  //     const user = await this.props.auth.getUser();
+  //     this.setState({ authenticated, user });
+  //   }
+  // }
+  let newUserEntry;
+  let newPersonEntry;
+  let newIllnessEntry;
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+
+    createNewPerson();
+  }
+
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        // console.log(`1st function:`);
+        setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
+      })
+    }
+
+  };
+
+  // Part of this could be used to redirect on login depending on whether they've filled out the form.
+  const getPeople = () => {
+    API.getPeople()
+      .then( result => {
+        //console.log(result.data);
+        const me = result.data.filter(({UserId})=> UserId === personState.UserId)[0];
+        console.log(me);
+        if (me) {setPersonState(me)};
+      })
+  }
+
+  const createNewPerson = () => {
+    API.createPerson(personState)
+      .then(result => {
+        // console.log(`3rd function:`);
+        setIllnessState({ ...illnessState, PersonId: result.data.id });;
+        createNewIllness();
+        console.log(result)
+        return result;
+      }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  const createNewIllness = () => {
+
+    API.createIllness(illnessState)
+      .then(
+        (result) => {
+          console.log(`4th function:`);
+          console.log(result);
+          return result;
+        }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+
 
   const classes = useStyles();
 

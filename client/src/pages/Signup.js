@@ -5,9 +5,9 @@ import {Redirect} from "react-router-dom";
 import {
     Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, TextField
 } from '@material-ui/core';
-import {
-    CoronavirusTextField, FieldList
-} from "../components/FormComponents/FormFields";
+// import {
+//     CoronavirusTextField, FieldList
+// } from "../components/FormComponents/FormFields";
 
 //import API routes 
 import API from "../utils/API";
