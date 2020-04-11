@@ -1,15 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
+import API from "../../utils/API"; 
+import { responsiveFontSizes } from '@material-ui/core';
 
 const data = [
-  {quarter: 1, earnings: 13000},
-  {quarter: 2, earnings: 16500},
-  {quarter: 3, earnings: 14250},
-  {quarter: 4, earnings: 19000}
+  {ageRange: 1,  cases: 32},
+  {ageRange: 2,  cases: 98},
+  {ageRange: 3,  cases: 144},
+  {ageRange: 4,  cases: 212},
+  {ageRange: 5,  cases: 300}
 ];
 
-class AgeGraph extends React.Component {
-  render() {
+function AgeGraph () {
+    const [ageArray, setAgeArray]= useState(); 
+    
+    useEffect(()=>{
+        createAgeArray(); 
+        console.log(ageArray); 
+    }, []); 
+
+    const createAgeArray = ()=>{
+        API.getPeople()
+            .then(response=>{
+                console.log(response.data)
+                const sickArray= response.data.filter(person => person.sick);
+                const newAgeArray = sickArray.map(person => person.age);
+                console.log(newAgeArray);  
+                setAgeArray(newAgeArray);
+                console.log(ageArray);  
+            }); 
+    }; 
+
     return (
       <div>
         <h1>Victory Tutorial</h1>
@@ -20,26 +41,24 @@ class AgeGraph extends React.Component {
            <VictoryAxis
           // tickValues specifies both the number of ticks and where
           // they are placed on the axis
-          tickValues={[1, 2, 3, 4]}
-          tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+          tickValues={[1, 2, 3, 4, 5]}
+          tickFormat={["0-20", "21-40", "41-60", "61-80", "81+"]}
         />
         <VictoryAxis
           dependentAxis
           // tickFormat specifies how ticks should be displayed
-          tickFormat={(x) => (`$${x / 1000}k`)}
         />
           <VictoryBar
             data={data}
             // data accessor for x values
-            x="quarter"
+            x="ageRange"
             // data accessor for y values
-            y="earnings"
+            y="cases"
         />
         </VictoryChart>
         
       </div>
     );
-  }
 }
 
 export default AgeGraph; 

@@ -67,13 +67,10 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         preExistingConditions: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('preExistingConditions', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         },
         listPreExistingConditions: {
@@ -81,13 +78,10 @@ module.exports = function(sequelize, DataTypes) {
             allowNull:true
         },
         sick: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('sick', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         }
     }); 

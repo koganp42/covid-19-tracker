@@ -6,13 +6,10 @@ module.exports = function(sequelize, DataTypes) {
     let dateStr = year + "-" + month + "-" + date;
     const Illness = sequelize.define("Illness", {
         tested: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('tested', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         },
         dateOfTest: {
@@ -38,13 +35,10 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
         },
         hospitalized: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('hospitalized', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         },
         dateOfHospitalization: {
@@ -57,23 +51,17 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         intensiveCare: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('intensiveCare', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         },
         death: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-            set: function(value) {
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              this.setDataValue('death', value);
+            type: DataTypes.STRING,
+            defaultValue: "false",
+            validate: {
+                isIn: [['false', 'true']],
             }
         },
         dateOfRecovery: {

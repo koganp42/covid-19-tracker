@@ -5,14 +5,14 @@ const usersToSeed = [
     {
         email: "ben@work.com",
         password:  "1234pass",
-        admin: true,
+        admin: "true",
         adminPassword: "admin"
 
     },
     {
         email: "brenda@work.com",
         password:  "1234pass",
-        admin: false
+        admin: "false"
     }
 ]
 
@@ -25,8 +25,8 @@ const peopleToSeed= [
         lat: 36.151490,
         lon: -86.765010,
         smoking: "never",
-        preExistingConditions: false,
-        sick: true,
+        preExistingConditions: "false",
+        sick: "true",
         UserId: 1
     },
     {
@@ -37,22 +37,22 @@ const peopleToSeed= [
         lat: 36.138750,
         lon: -86.801790,
         smoking: "never",
-        preExistingConditions: false,
-        sick: false,
+        preExistingConditions: "false",
+        sick: "false",
         UserId: 2 
     }
 ]
 
 const illnessesToSeed= [
     {
-        "tested": true,
+        "tested": "true",
         "dateOfTest": "2020-03-10",
         "dateOfOnset": "2020-03-05",
         "symptoms": "dry cough and fever",
-        "hospitalized": true,
+        "hospitalized": "true",
         "dateOfHospitalization": "2020-03-10",
-        "intensiveCare": false,
-        "death": false,
+        "intensiveCare": "false",
+        "death": "false",
         "dateOfRecovery": "2020-03-17",
         "PersonId": 1
     }
