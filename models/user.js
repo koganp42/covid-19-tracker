@@ -42,6 +42,17 @@ module.exports = function(sequelize, DataTypes) {
   User.addHook("beforeBulkCreate", function(users) {
     for (const user of users){
       user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+      if (user.admin && user.adminPassword){
+        if (user.adminPassword === "admin"){
+          user.adminPassword = bcrypt.hashSync(user.adminPassword, bcrypt.genSaltSync(10), null);
+        } else {
+          user.admin = false; 
+          user.adminPassword= ""; 
+        }
+      }
+      if (user.admin && !user.adminPassword){
+        user.admin= false; 
+      }
     }
   });
 

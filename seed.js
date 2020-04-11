@@ -4,11 +4,15 @@ const db = require("./models");
 const usersToSeed = [
     {
         email: "ben@work.com",
-        password:  "1234pass"
+        password:  "1234pass",
+        admin: true,
+        adminPassword: "admin"
+
     },
     {
         email: "brenda@work.com",
-        password:  "1234pass"
+        password:  "1234pass",
+        admin: false
     }
 ]
 
