@@ -63,9 +63,11 @@ export default function BasicTextFields() {
       .then(response=>{
         if (response.status === 200){
           console.log("Logged in!"); 
-          console.log(response); 
-          setRedirect("/map"); 
-          console.log(redirect); 
+          console.log(response);
+          localStorage.setItem("currentUserId", response.data.id)
+          setRedirect("/testForm"); 
+          // console.log(redirect); 
+          // console.log(userInfo);
           // setRedirect({redirect: '/map'}); 
           //set state to logged in 
           // this.props.updateUser({
