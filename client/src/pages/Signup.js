@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Redirect} from "react-router-dom"; 
 import {
-    Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, TextField
+    Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, TextField, Checkbox, FormLabel, 
+    FormControlLabel
 } from '@material-ui/core';
 import {
     CoronavirusTextField, FieldList
@@ -114,7 +115,15 @@ export default function Signup() {
                                 onChange={e => setUserState({...userState, password: e.target.value})}
                             />
                         </Grid>
+                        <Grid item>
+                        <FormLabel component="legend">Are you an Administrator?</FormLabel>
+                        
+                        <FormControlLabel
+                            control={<Checkbox name="yes" />}
+                            label="Yes, I am an Admin"
+                        />
 
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"

@@ -99,7 +99,7 @@ export default function BasicTextFields() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item md={12}>
+                        <Grid item xs={12} sm={12}>
                         <TextField 
                           value= {userInfo.email} 
                           name="email"
@@ -110,7 +110,7 @@ export default function BasicTextFields() {
                           fullWidth
                         />
                         </Grid>
-                        <Grid item md={12}>
+                        <Grid item xs={12} sm={12}>
                         <TextField 
                           value= {userInfo.password} 
                           name="password"
