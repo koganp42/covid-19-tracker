@@ -9,6 +9,17 @@ module.exports = {
             });
     },
 
+    findAllDataById: function(req, res) {
+        db.User
+            .findAll({
+                include: [{model: Person}, {model: Illness}],
+                where: {id: req.params.id}
+            })
+            .then(function(dbUser) {
+                res.json(dbUser); 
+            });
+    },
+
     //change the id to be retrieved internally so that can't access other user's accounts
     findById: function(req, res){
         db.User  

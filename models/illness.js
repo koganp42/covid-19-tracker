@@ -88,7 +88,7 @@ module.exports = function(sequelize, DataTypes) {
     }); 
     
     Illness.associate = function(models) {
-        Illness.belongsTo(models.Person);
+        Illness.belongsTo(models.User);
       };
 
     return Illness;

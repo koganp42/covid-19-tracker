@@ -7,14 +7,10 @@ import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
 import { Redirect } from "react-router-dom";
-
 import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
-
 
 //import API routes 
 import API from "../utils/API"
-
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,7 +48,7 @@ export default function TestForm() {
     sick: "false",
     UserId: 0
   });
-  const [formFields, setFormFields] = useState([]);
+  // const [formFields, setFormFields] = useState([]);
   const [illnessState, setIllnessState] = useState({
     tested: "false",
     dateOfTest: new Date(),
@@ -74,6 +70,7 @@ export default function TestForm() {
       setLoggedIn((UserId != NaN));
       //if (loggedIn){
       setPersonState({ ...personState, UserId });
+      setIllnessState({ ...illnessState, UserId })
       getPeople();
       //setIllnessState({ ...illnessState, UserId });
       getUserLocation();
@@ -84,7 +81,7 @@ export default function TestForm() {
 
   
 
-  const [redirect, setRedirect] = useState(null);
+  // const [redirect, setRedirect] = useState(null);
   // API.authenticateUser(userInfo)
   //     .then(response=>{
   //       if (response.status === 200){
@@ -108,27 +105,15 @@ export default function TestForm() {
   //       setRedirect("/login"); 
   //     }); 
 
-  // async formSubmit() {
-  //   const authenticated = await this.props.auth.isAuthenticated();
-  //   if (authenticated !== this.state.authenticated) {
-  //     const user = await this.props.auth.getUser();
-  //     this.setState({ authenticated, user });
-  //   }
-  // }
-  let newUserEntry;
-  let newPersonEntry;
-  let newIllnessEntry;
 
   const formSubmit = (e) => {
     e.preventDefault();
-
     createNewPerson();
   }
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        // console.log(`1st function:`);
         setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
       })
     }
@@ -139,18 +124,21 @@ export default function TestForm() {
   const getPeople = () => {
     API.getPeople()
       .then( result => {
-        //console.log(result.data);
         const me = result.data.filter(({UserId})=> UserId === personState.UserId)[0];
         console.log(me);
         if (me) {setPersonState(me)};
-      })
+      });
+      API.getIllness()
+      .then( result => {
+        const me = result.data.filter(({UserId})=> UserId === illnessState.UserId)[0];
+        console.log(me);
+        if (me) {setIllnessState(me)};
+      });
   }
 
   const createNewPerson = () => {
     API.createPerson(personState)
       .then(result => {
-        // console.log(`3rd function:`);
-        setIllnessState({ ...illnessState, PersonId: result.data.id });;
         createNewIllness();
         console.log(result)
         return result;

@@ -106,6 +106,7 @@ export default function Signup() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                type="email"
                                 value={userState.email}
                                 onChange={e => setUserState({...userState, email: e.target.value})}
                             />
@@ -119,6 +120,7 @@ export default function Signup() {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                type="password"
                                 value={userState.password}
                                 autoComplete="current-password"
                                 onChange={e => setUserState({...userState, password: e.target.value})}
