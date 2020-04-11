@@ -1,17 +1,29 @@
 import React, {useState, useEffect} from 'react';
-import { makeStyles , Grid} from '@material-ui/core/styles';
-import { Button, responsiveFontSizes } from "@material-ui/core"
-import TextField from '@material-ui/core/TextField';
+import {responsiveFontSizes } from "@material-ui/core"
 import API from "../utils/API"; 
-import {Redirect} from "react-router-dom"; 
+import {Redirect, Link} from "react-router-dom"; 
+import {
+  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid,  TextField
+} from '@material-ui/core';
 // import {useLoggedInContext} from "../utils/GlobalState"; 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
+  paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+  },
+  avatar: {
       margin: theme.spacing(1),
-      width: '25ch',
-    },
+      backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(3),
+  },
+  submit: {
+      margin: theme.spacing(3, 0, 2),
   },
 }));
 
@@ -76,25 +88,71 @@ export default function BasicTextFields() {
   return (
     <div>
       { redirect !== null ? ( <Redirect to= {redirect}/>) : (
-          <form className={classes.root} noValidate autoComplete="off">
-              <h2>Login</h2>
-            <TextField 
-              value= {userInfo.email} 
-              name="email"
-              onChange={handleChange}
-              id="standard-basic" 
-              label="email" 
-            />
-            <TextField 
-              value= {userInfo.password} 
-              name="password"
-              onChange={handleChange}
-              id="standard-basic" 
-              label="password" 
-            />
-            <Button onClick={handleSubmit} variant="contained">Enter</Button>
-          </form>) }
+        <Container component="main" maxWidth="sm">
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+
+                </Avatar>
+                <Typography component="h1" variant="h6">
+                    Log In
+                </Typography>
+                <form className={classes.form} noValidate>
+                    <Grid container spacing={2}>
+                        <Grid item md={12}>
+                        <TextField 
+                          value= {userInfo.email} 
+                          name="email"
+                          onChange={handleChange}
+                          id="standard-basic" 
+                          label="Email" 
+                          variant="outlined"
+                          fullWidth
+                        />
+                        </Grid>
+                        <Grid item md={12}>
+                        <TextField 
+                          value= {userInfo.password} 
+                          name="password"
+                          onChange={handleChange}
+                          id="standard-basic" 
+                          label="Password" 
+                          variant="outlined"
+                          fullWidth
+                        />
+                        </Grid>
+
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={handleSubmit}
+                    >
+                        Submit
+                    </Button>
+                    {/* Commenting the following out to be used in a later version */}
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <Link to="/Signup" variant="body2">
+                                Don't Have An Accout? Sign Up Here
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </form>
+            </div>
+        </Container>
+          ) }
     </div>
     
   );
 }
+
+
+
+
+
+
+
