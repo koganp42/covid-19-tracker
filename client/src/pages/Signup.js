@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Redirect} from "react-router-dom"; 
 import {
-    Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, TextField
+    Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, TextField, Checkbox, FormLabel, 
+    FormControlLabel, Box
 } from '@material-ui/core';
 // import {
 //     CoronavirusTextField, FieldList
@@ -38,8 +39,17 @@ export default function Signup() {
     
     const [userState, setUserState] = useState({
         email: "",
-        password: ""
+        password: "",
+        admin: false,
+        adminPassword: ""
     });
+
+    const [adminDisplay, setAdminDisplay] = useState(true)
+
+    const handleChange = (event) => {
+        setUserState({ ...userState, [event.target.name]: event.target.checked });
+        setAdminDisplay(!adminDisplay)
+      };
     
     const formSubmit = (e) => {
         e.preventDefault();
@@ -116,7 +126,33 @@ export default function Signup() {
                                 onChange={e => setUserState({...userState, password: e.target.value})}
                             />
                         </Grid>
+                        <Grid item>
+                        <FormLabel component="legend">Are you an Administrator?</FormLabel>
+                        
+                        <FormControlLabel
+                            control={<Checkbox
+                                 name="admin"
+                                 onChange={handleChange} />}
+                            label="Yes, I am an Admin"
+                        />
 
+                        </Grid>
+                        <Grid item xs={12} display="none">
+                            <TextField
+                                disabled={adminDisplay}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="adminPassword"
+                                label="Admin Password"
+                                type="adminPassword"
+                                id="adminPassword"
+                                // value={userState.password}
+                                // autoComplete="current-password"
+                                onChange={e => setUserState({...userState, adminPassword: e.target.value})}
+                                
+                            />
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
