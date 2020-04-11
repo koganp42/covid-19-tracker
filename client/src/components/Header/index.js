@@ -49,7 +49,8 @@ export default function ButtonAppBar() {
   const handleLogout = function(){
     API.logOut()
       .then(response=>{
-        console.log("logout"); 
+        console.log("logout");
+        localStorage.setItem("currentUserId", null); 
         setRedirect("/login"); 
       })
       .catch(err=>console.log(err)); 

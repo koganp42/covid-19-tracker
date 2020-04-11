@@ -45,6 +45,9 @@ module.exports = function(sequelize, DataTypes) {
   User.associate = function(models) {
     User.hasOne(models.Person, {
       onDelete: "cascade"
+    }),
+    User.hasOne(models.Person, {
+      onDelete: "cascade"
     });
   };
   

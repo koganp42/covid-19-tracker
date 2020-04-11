@@ -5,6 +5,15 @@ export default {
   getPeople: function() {
     return axios.get("/api/people");
   },
+
+  getIllness: function() {
+    return axios.get("/api/illnesses");
+  },
+
+  getAllDataById: function(id) {
+    return axios.get("/api/people");
+  },
+
   // Creates new user
   createUser: function(user) {
     return axios.post("/api/users", user);
