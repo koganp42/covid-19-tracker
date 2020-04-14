@@ -11,7 +11,8 @@ export default function App() {
     const [redirect, setRedirect] = useState( null); 
     // const [state, dispatch] = useLoggedInContext(); 
     const [graphSelect, setGraphSelect] = useState({
-        graph: 'none'
+        graph: 'none',
+        mapWidth: '100vw'
     })
 
     useEffect(()=>{
@@ -42,7 +43,7 @@ export default function App() {
                 <Fragment>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Map />
+                            <Map graphSelect={graphSelect}/>
                         </Grid>
                     </Grid>
                     <Footer graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
@@ -57,7 +58,7 @@ export default function App() {
                 <Fragment>
                     <Grid container spacing={2}>
                         <Grid item xs={7}>
-                            <Map />
+                            <Map graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
                         </Grid>
                         <Grid item xs={4}>
                             <AgeGraph />                       

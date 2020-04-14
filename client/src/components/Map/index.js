@@ -93,7 +93,7 @@ function Map(props) {
 
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
-export default function App() {
+export default function App(props) {
     return(
         
         <Fragment >
@@ -102,7 +102,7 @@ export default function App() {
             <WrappedMap 
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
                 loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
-                containerElement={<div style={{height:'100%', width:"50vw"}} className={"mapContainer"} />}
+                containerElement={<div style={{height:'100%', width: props.graphSelect.mapWidth}} className={"mapContainer"} />}
                 mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
             >
                {console.log(patientData)}
