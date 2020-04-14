@@ -108,7 +108,8 @@ export default function BasicTextFields() {
                             value= {userInfo.email} 
                             name="email"
                             onChange={handleChange}
-                            id="standard-basic" 
+                            id="email" 
+                            type="email"
                             label="Email" 
                             variant="outlined"
                             fullWidth
@@ -119,8 +120,9 @@ export default function BasicTextFields() {
                             value= {userInfo.password} 
                             name="password"
                             onChange={handleChange}
-                            id="standard-basic" 
+                            id="password" 
                             label="Password" 
+                            type="password"
                             variant="outlined"
                             fullWidth
                           />
