@@ -33,18 +33,10 @@ export default function  AgeGraph () {
       console.log(ageData); 
         API.getPeople()
             .then(response=>{
-                const sickArray= response.data.filter(person => person.sick==="true" || person.sick==="false");
+                const sickArray= response.data.filter(person => person.sick==="true");
                 const newData = sickArray.map(person => person.age);
                 setAgeData(newData); 
                 createAgeObject(newData); 
-                // console.log(ageObject); 
-                // setData([
-                //   {ageRange: 1,  cases: ageObject["0-20"]},
-                //   {ageRange: 2,  cases: ageObject["21-40"]},
-                //   {ageRange: 3,  cases: ageObject["41-60"]},
-                //   {ageRange: 4,  cases: ageObject["61-80"]},
-                //   {ageRange: 5,  cases: ageObject["81+"]}
-                // ]);  
                 
             })
             .catch(err=>console.log(err)); 

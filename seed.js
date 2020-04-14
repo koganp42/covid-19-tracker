@@ -47,13 +47,85 @@ const illnessesToSeed= [
     {
         "tested": "true",
         "dateOfTest": "2020-03-10",
-        "dateOfOnset": "2020-03-05",
+        "dateOfOnset": "2020-01-05",
         "symptoms": "dry cough and fever",
         "hospitalized": "true",
         "dateOfHospitalization": "2020-03-10",
         "intensiveCare": "false",
         "death": "false",
+        "dateOfRecovery": "2020-02-17",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-03-10",
+        "dateOfOnset": "2020-02-10",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-10",
+        "intensiveCare": "true",
+        "death": "true",
         "dateOfRecovery": "2020-03-17",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-03-15",
+        "dateOfOnset": "2020-04-01",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-10",
+        "intensiveCare": "true",
+        "death": "false",
+        "dateOfRecovery": "2020-03-17",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-03-10",
+        "dateOfOnset": "2020-02-29",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-10",
+        "intensiveCare": "true",
+        "death": "true",
+        "dateOfRecovery": "2020-03-10",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-02-11",
+        "dateOfOnset": "2020-03-18",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-10",
+        "intensiveCare": "true",
+        "death": "false",
+        "dateOfRecovery": "2020-03-17",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-01-29",
+        "dateOfOnset": "2020-02-12",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-01",
+        "intensiveCare": "false",
+        "death": "false",
+        "dateOfRecovery": "2020-03-09",
+        "PersonId": 1
+    },
+    {
+        "tested": "true",
+        "dateOfTest": "2020-03-10",
+        "dateOfOnset": "2020-03-26",
+        "symptoms": "dry cough and fever",
+        "hospitalized": "true",
+        "dateOfHospitalization": "2020-03-29",
+        "intensiveCare": "false",
+        "death": "false",
+        "dateOfRecovery": "2020-04-08",
         "PersonId": 1
     }
 ]
