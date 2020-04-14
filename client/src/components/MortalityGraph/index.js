@@ -16,7 +16,7 @@ return (
         <h2>Cases by Outcome</h2>
 
 <VictoryPie
-colorScale = {['#fe425c','#7890fd','#91e3f8',]}
+colorScale = {['coral','#7890fd','#91e3f8',]}
   data={[
     { x: "Died", y: 35 },
     { x: "Recovered", y: 40 },
