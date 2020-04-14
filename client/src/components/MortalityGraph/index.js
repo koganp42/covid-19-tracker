@@ -7,7 +7,8 @@ export default function MortalityGraph() {
         coral: '#ff7b48',
         purple: '#6c63ff',
         lightBlue: '#91e3f8',
-        lightPurple: '#7890fd'
+        lightPurple: '#7890fd',
+        red: '#fe425c'
       }
 
 return (
@@ -15,7 +16,7 @@ return (
         <h2>Cases by Outcome</h2>
 
 <VictoryPie
-colorScale = {['#ff7b48','#7890fd','#91e3f8',]}
+colorScale = {['#fe425c','#7890fd','#91e3f8',]}
   data={[
     { x: "Died", y: 35 },
     { x: "Recovered", y: 40 },

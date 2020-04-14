@@ -87,6 +87,7 @@ export default function  AgeGraph () {
         <VictoryChart
         theme={VictoryTheme.material}
          domainPadding={20}
+
         >
            <VictoryAxis
            independentAxis

@@ -97,17 +97,19 @@ export default function App(props) {
     return(
         
         <Fragment >
-        <div style={{width:"90vw", height:"80vh"}} className={"mainDiv"}>
+        <div  className={"mainDiv"}>
 
             <WrappedMap 
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
-                loadingElement={<div style={{height:'99%'}} className={"mapContainer"}/>}
-                containerElement={<div style={{height:'99%', width: props.graphSelect.mapWidth}} className={"mapContainer"} />}
-                mapElement={<div style={{height:'99%'}} className={"mapContainer"}/>}
+                loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
+                containerElement={<div style={{height:'100%', width: props.graphSelect.mapWidth}} className={"mapContainer"} />}
+                mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
             >
                {console.log(patientData)}
             </WrappedMap>
-        </div>
+
+            </div>
+
 
         </Fragment>
 

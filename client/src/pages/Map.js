@@ -13,7 +13,7 @@ export default function App() {
     // const [state, dispatch] = useLoggedInContext(); 
     const [graphSelect, setGraphSelect] = useState({
         graph: 'none',
-        mapWidth: '100vw'
+        mapWidth: '100%'
     })
 
     useEffect(()=>{
