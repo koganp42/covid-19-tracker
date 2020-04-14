@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  
 }));
 
 export default function TestForm() {
   //////////// Reminder to create a function for converting dob to age
+  const classes = useStyles();
   let UserId;
   const [personState, setPersonState] = useState({
     firstName: "",
@@ -66,8 +68,6 @@ export default function TestForm() {
     UserId: 0
   });
 
-
-
   const [redirect, setRedirect] = useState(null);
 
   const checkAuth = () => {
@@ -88,7 +88,6 @@ export default function TestForm() {
           setRedirect("/login"); 
         }); 
   }
-  // checkAuth();
 
   const getPeople = () => {
     API.getPeople()
@@ -114,7 +113,6 @@ export default function TestForm() {
 
   useEffect(
     () => {
-
       checkAuth();
       getPeople();
       getUserLocation();
@@ -132,7 +130,6 @@ export default function TestForm() {
     API.createPerson(personState)
       .then(result => {
         createNewIllness();
-        console.log(result);
         return result;
       }
       )
@@ -146,8 +143,6 @@ export default function TestForm() {
     API.createIllness(illnessState)
       .then(
         (result) => {
-          console.log(`4th function:`);
-          console.log(result);
           return result;
         }
       )
@@ -156,10 +151,7 @@ export default function TestForm() {
       })
   }
 
-  const classes = useStyles();
-
-  const fields = FieldList;
-
+  // Function for updating the person and illness states when a new 
   const handleInputChange = (key, value, context) => {
     switch (context) {
       case "person":
@@ -173,6 +165,9 @@ export default function TestForm() {
     }
   }
 
+  // Pulling in the list of questions from Fieldlist.js.
+  const fields = FieldList;
+  // Mapping the array by input type and generating the form questions accordingly.
   const getFormFields = () => {
     return fields.map(field => {
       const key = field.id;
@@ -195,7 +190,9 @@ export default function TestForm() {
             field={field}
             value={value}
             // Must pass in date as the first property here in order to expose the formatted date (or stringDate)
-            handleChange={(date, stringDate) => handleInputChange(key, stringDate, field.context)}
+            handleChange={(date, stringDate) => 
+              handleInputChange(key, stringDate, field.context)
+            }
           />);
         case "radio":
           return (<CoronavirusRadio
@@ -203,7 +200,7 @@ export default function TestForm() {
             field={field}
             value={value}
             handleChange={(e) => {
-              const { id, value } = e.target;
+              const { value } = e.target;
               handleInputChange(key, value, field.context);
             }}
           />)
@@ -226,7 +223,7 @@ export default function TestForm() {
         <Typography component="h1" variant="h5">
           Please enter your test result and some relevant personal information that will help researchers track the spread of coronavirus.
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
 
             {getFormFields()}
