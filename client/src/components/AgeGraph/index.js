@@ -25,7 +25,7 @@ export default function  AgeGraph () {
       console.log(ageData); 
         API.getPeople()
             .then(response=>{
-                const sickArray= response.data.filter(person => person.sick==="true");
+                const sickArray= response.data.filter(person => person.sick==="true" || person.sick==="false");
                 const newData = sickArray.map(person => person.age);
                 setAgeData(newData); 
                 createAgeObject(newData); 

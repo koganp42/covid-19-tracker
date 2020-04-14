@@ -10,6 +10,9 @@ import { Grid } from "@material-ui/core"
 export default function App() {
     const [redirect, setRedirect] = useState( null); 
     // const [state, dispatch] = useLoggedInContext(); 
+    const [graphSelect, setGraphSelect] = useState({
+        graph: 'none'
+    })
 
     useEffect(()=>{
         console.log("Check check"); 
@@ -32,26 +35,38 @@ export default function App() {
          
     }, [])
 
-    return(
-        <div>
-        { redirect !== null ? (<Redirect to= {redirect}/>) : (
-            
-            <Fragment>
-
-                <Grid container spacing={2}>
-                    <Grid item xs={7}>
-                        <Map />
+    if(graphSelect.graph === 'none') {
+        return(
+            <div>
+            { redirect !== null ? (<Redirect to= {redirect}/>) : (
+                <Fragment>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Map />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                        <AgeGraph />                       
+                    <Footer graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
+                </Fragment>
+                ) }
+            </div> 
+        )
+    } else if (graphSelect.graph === 'age'){
+        return(
+            <div>
+            { redirect !== null ? (<Redirect to= {redirect}/>) : (
+                <Fragment>
+                    <Grid container spacing={2}>
+                        <Grid item xs={7}>
+                            <Map />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <AgeGraph />                       
+                        </Grid>
                     </Grid>
-                </Grid>
-
-                <Footer />
-
-            </Fragment>
-            ) }
-        </div>
-        
-    )
+                    <Footer graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
+                </Fragment>
+                ) }
+            </div> 
+        )
+    }
 };

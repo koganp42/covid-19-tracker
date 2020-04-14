@@ -39,7 +39,7 @@ function Map(props) {
     return (
         <Fragment>
         <GoogleMap 
-            width={'50%'}
+            // width={'50%'}
             defaultZoom={10} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
             defaultOptions={{styles:mapStyles}}
@@ -97,7 +97,7 @@ export default function App() {
     return(
         
         <Fragment >
-        <div style={{width:"50vw", height:"80vh"}} className={"mainDiv"}>
+        <div style={{width:"100vw", height:"80vh"}} className={"mainDiv"}>
 
             <WrappedMap 
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
