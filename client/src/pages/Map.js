@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import Map from "../components/Map"
 import AgeGraph from '../components/AgeGraph'
+import MortalityGraph from '../components/MortalityGraph'
 import Footer from '../components/Footer'
 import API from "../utils/API";
 import {Redirect} from "react-router-dom"; 
@@ -69,5 +70,24 @@ export default function App() {
                 ) }
             </div> 
         )
+    } else if (graphSelect.graph === 'outcome'){
+        return(
+            <div>
+            { redirect !== null ? (<Redirect to= {redirect}/>) : (
+                <Fragment>
+                    <Grid container spacing={2}>
+                        <Grid item xs={7}>
+                            <Map graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <MortalityGraph />                      
+                        </Grid>
+                    </Grid>
+                    <Footer graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
+                </Fragment>
+                ) }
+            </div> 
+        )
     }
+    
 };

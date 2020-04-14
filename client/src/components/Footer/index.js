@@ -28,18 +28,25 @@ export default function CenteredTabs(props) {
         textColor="primary"
         centered
       >
-        <Tab label="Cases by Age" onClick={()=>{
-          props.setGraphSelect({
-            graph:'age',
-            mapWidth: '50vw'
-          })
-        }}/>
         <Tab label="Hide Graphs" onClick={()=>{
           props.setGraphSelect({
             graph:'none',
             mapWidth: '100vw'
           })
         }}/>
+        <Tab label="Cases by Age" onClick={()=>{
+          props.setGraphSelect({
+            graph:'age',
+            mapWidth: '50vw'
+          })
+        }}/>
+        <Tab label="Cases by Outcome" onClick={()=>{
+          props.setGraphSelect({
+            graph:'outcome',
+            mapWidth: '50vw'
+          })
+        }}/>
+
         
       </Tabs>
     </Paper>
