@@ -19,7 +19,7 @@ function AgeGraph () {
         console.log(ageArray); 
     }, []); 
 
-    const createAgeArray = ()=>{
+    function createAgeArray() {
         API.getPeople()
             .then(response=>{
                 console.log(response.data)
@@ -32,11 +32,11 @@ function AgeGraph () {
     }; 
 
     return (
-      <div>
+      <div style={{height:'80%'}}>
         <h1>Victory Tutorial</h1>
         <VictoryChart
         theme={VictoryTheme.material}
-         domainPadding={20}
+        //  domainPadding={20}
         >
            <VictoryAxis
           // tickValues specifies both the number of ticks and where
