@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, Link
+  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid,
 } from '@material-ui/core';
 import {
   CoronavirusTextField, CoronavirusRadio, FieldList
