@@ -5,7 +5,6 @@ import {Redirect, Link} from "react-router-dom";
 import {
   Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid,  TextField
 } from '@material-ui/core';
-// import {useLoggedInContext} from "../utils/GlobalState"; 
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +30,8 @@ export default function BasicTextFields() {
   const classes = useStyles();
   const [userInfo, setUserInfo]= useState({email: "", password: ""});  
   const [redirect, setRedirect] = useState( null); 
-  // const [state, dispatch] = useLoggedInContext(); 
+  const [loginHidden, setLoginHidden]= useState({}); 
+  const [errorHidden, setErrorHidden]= useState({display: "none"}); 
 
   useEffect(()=>{ 
     console.log("Check check"); 
@@ -65,88 +65,92 @@ export default function BasicTextFields() {
           console.log("Logged in!"); 
           console.log(response);
           setRedirect("/testForm"); 
-          // console.log(redirect); 
-          // console.log(userInfo);
-          // setRedirect({redirect: '/map'}); 
-          //set state to logged in 
-          // this.props.updateUser({
-        //     loggedIn: true,
-        //     username: response.data.email
-        // })
-          //update sate to redirect page
-          // this.setState({redirectTo: '/map'})
         }
       })
       .catch(err=>{
         console.log(err); 
         console.log("Error Logging In"); 
+        setLoginHidden({display: "none"}); 
+        setErrorHidden({}); 
         setRedirect(null); 
         console.log(redirect); 
       }); 
 
   }
 
+  const handleOnClick= (event)=>{
+    setErrorHidden({display: "none"}); 
+    setLoginHidden({}); 
+  }
+
   return (
     <div>
       { redirect !== null ? ( <Redirect to= {redirect}/>) : (
-        <Container component="main" maxWidth="sm">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
+        <div>
+          <Container component="main" maxWidth="sm">
+              <CssBaseline />
+              <div className={classes.paper}>
+                  <Avatar className={classes.avatar}>
 
-                </Avatar>
-                <Typography component="h1" variant="h6">
-                    Log In
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
-                        <TextField 
-                          value= {userInfo.email} 
-                          name="email"
-                          onChange={handleChange}
-                          id="email" 
-                          label="Email" 
-                          variant="outlined"
-                          type="email"
-                          fullWidth
-                        />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                        <TextField 
-                          value= {userInfo.password} 
-                          name="password"
-                          onChange={handleChange}
-                          id="password" 
-                          label="Password" 
-                          variant="outlined"
-                          type="password"
-                          fullWidth
-                        />
-                        </Grid>
+                  </Avatar>
+                  <Typography component="h1" variant="h6">
+                      Log In
+                  </Typography>
+                  <div  className={classes.paper} style={errorHidden}>
+                    <h3>Oops!</h3>
+                    <p>It looks like your login information doesn't match our records.</p>
+                    <button onClick={handleOnClick}>Try Again</button>
+                  </div>
+                  <form className={classes.form} noValidate style={loginHidden}>
+                      <Grid container spacing={2}>
+                          <Grid item xs={12} sm={12}>
+                          <TextField 
+                            value= {userInfo.email} 
+                            name="email"
+                            onChange={handleChange}
+                            id="standard-basic" 
+                            label="Email" 
+                            variant="outlined"
+                            fullWidth
+                          />
+                          </Grid>
+                          <Grid item xs={12} sm={12}>
+                          <TextField 
+                            value= {userInfo.password} 
+                            name="password"
+                            onChange={handleChange}
+                            id="standard-basic" 
+                            label="Password" 
+                            variant="outlined"
+                            fullWidth
+                          />
+                          </Grid>
 
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={handleSubmit}
-                    >
-                        Submit
-                    </Button>
-                    {/* Commenting the following out to be used in a later version */}
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link to="/Signup" variant="body2">
-                                New user? Sign Up Here
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-        </Container>
+                      </Grid>
+                      <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          color="primary"
+                          className={classes.submit}
+                          onClick={handleSubmit}
+                      >
+                          Submit
+                      </Button>
+                      {/* Commenting the following out to be used in a later version */}
+                      <Grid container justify="flex-end">
+                          <Grid item>
+                              <Link to="/Signup" variant="body2">
+                                  Don't Have An Accout? Sign Up Here
+                              </Link>
+                          </Grid>
+                      </Grid>
+                  </form>
+              </div>
+          </Container>
+
+          
+        </div>
           ) }
     </div>
     
