@@ -2,6 +2,7 @@ const db = require("../models");
 
 module.exports = {
     findAll: function(req, res) {
+        console.log("This is user session" + req.user);
         db.Person
             .findAll({})
             .then(dbPeople => {

@@ -64,7 +64,6 @@ export default function BasicTextFields() {
         if (response.status === 200){
           console.log("Logged in!"); 
           console.log(response);
-          localStorage.setItem("currentUserId", response.data.id)
           setRedirect("/testForm"); 
           // console.log(redirect); 
           // console.log(userInfo);
@@ -106,9 +105,10 @@ export default function BasicTextFields() {
                           value= {userInfo.email} 
                           name="email"
                           onChange={handleChange}
-                          id="standard-basic" 
+                          id="email" 
                           label="Email" 
                           variant="outlined"
+                          type="email"
                           fullWidth
                         />
                         </Grid>
@@ -117,9 +117,10 @@ export default function BasicTextFields() {
                           value= {userInfo.password} 
                           name="password"
                           onChange={handleChange}
-                          id="standard-basic" 
+                          id="password" 
                           label="Password" 
                           variant="outlined"
+                          type="password"
                           fullWidth
                         />
                         </Grid>
@@ -139,7 +140,7 @@ export default function BasicTextFields() {
                     <Grid container justify="flex-end">
                         <Grid item>
                             <Link to="/Signup" variant="body2">
-                                Don't Have An Accout? Sign Up Here
+                                New user? Sign Up Here
                             </Link>
                         </Grid>
                     </Grid>

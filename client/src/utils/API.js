@@ -10,8 +10,8 @@ export default {
     return axios.get("/api/illnesses");
   },
 
-  getAllDataById: function(id) {
-    return axios.get("/api/people");
+  findAllDataById: function() {
+    return axios.get("/api/users/data");
   },
 
   // Creates new user
