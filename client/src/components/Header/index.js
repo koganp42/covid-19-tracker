@@ -66,7 +66,8 @@ export default function ButtonAppBar() {
               <Typography variant="h6" className={classes.title}>
                 Covid-19 Tracker
               </Typography>
-              <Button href="/TestForm">Back to Form</Button>
+              <Button href="/Map">Go to Map</Button>
+              <Button href="/TestForm">Go to Form</Button>
               <Button href="/Login" onClick={handleLogout}>Log Out</Button>
               {/* <Link className={classes.link} to="/TestForm">Back to Form</Link>
               <Link className={classes.link} onClick={handleLogout}>Log Out</Link> */}
