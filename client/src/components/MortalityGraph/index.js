@@ -52,7 +52,7 @@ export default function MortalityGraph() {
     }
 
 return (
-    <div>
+    <div style={{height:'80%', width:'80%'}}>
     <h2>Cases by Outcome</h2>
     <VictoryPie
         colorScale = {['coral','#7890fd','#91e3f8',]}

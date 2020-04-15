@@ -61,7 +61,7 @@ export default function App() {
                         <Grid item xs={7}>
                             <Map graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={5}>
                             <AgeGraph />                       
                         </Grid>
                     </Grid>
@@ -79,7 +79,7 @@ export default function App() {
                         <Grid item xs={7}>
                             <Map graphSelect={graphSelect} setGraphSelect={setGraphSelect}/>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={5}>
                             <MortalityGraph />                      
                         </Grid>
                     </Grid>

@@ -40,7 +40,7 @@ function Map(props) {
         <Fragment>
         <GoogleMap 
             // width={'50%'}
-            defaultZoom={10} 
+            defaultZoom={9} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
             defaultOptions={{styles:mapStyles}}
         >

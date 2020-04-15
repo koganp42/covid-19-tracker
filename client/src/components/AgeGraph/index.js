@@ -74,7 +74,7 @@ export default function  AgeGraph () {
     }; 
 
     return (
-      <div>
+      <div style={{height:'80%', width:'80%'}}>
         <h2>Cases by Age</h2>
         <VictoryChart
         theme={VictoryTheme.material}
