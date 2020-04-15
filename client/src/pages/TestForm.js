@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid, Link
+  Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid,
 } from '@material-ui/core';
 import {
   CoronavirusTextField, CoronavirusRadio, FieldList
@@ -11,6 +11,9 @@ import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/
 
 //import API routes 
 import API from "../utils/API"
+
+
+///////////Refactor all api calls to use req.user.id
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TestForm() {
   //////////// Reminder to create a function for converting dob to age
-  const [personState, setPersonState] = useState(   {
+  let UserId;
+  const [personState, setPersonState] = useState({
     firstName: "",
     lastName: "",
     age: 0,
@@ -59,88 +63,76 @@ export default function TestForm() {
     intensiveCare: "false",
     death: "false",
     dateOfRecovery: new Date(),
-    PeopleId: 0
+    UserId: 0
   });
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  let UserId;
-  useEffect(
-    () => {
-      UserId = parseInt(localStorage.getItem('currentUserId'))
-      setLoggedIn((UserId != NaN));
-      //if (loggedIn){
-      setPersonState({ ...personState, UserId });
-      setIllnessState({ ...illnessState, UserId })
-      getPeople();
-      //setIllnessState({ ...illnessState, UserId });
-      getUserLocation();
-      //}
-    },
-    [personState.UserId],
-  );
-
-  
-
-  // const [redirect, setRedirect] = useState(null);
-  // API.authenticateUser(userInfo)
-  //     .then(response=>{
-  //       if (response.status === 200){
-  //         console.log("Logged in!"); 
-  //         console.log(response);
-  //         console.log(redirect);
-  //         return response; 
-  //         // setRedirect({redirect: '/map'}); 
-  //         //set state to logged in 
-  //         // this.props.updateUser({
-  //       //     loggedIn: true,
-  //       //     username: response.data.email
-  //       // })
-  //         //update sate to redirect page
-  //         // this.setState({redirectTo: '/map'})
-  //       }
-  //     })
-  //     .catch(err=>{
-  //       console.log(err); 
-  //       console.log("Error Logging In"); 
-  //       setRedirect("/login"); 
-  //     }); 
 
 
-  const formSubmit = (e) => {
-    e.preventDefault();
-    createNewPerson();
+  const [redirect, setRedirect] = useState(null);
+
+  const checkAuth = () => {
+    API.checkAuthentication()
+        .then(response=>{
+          if (response.status === 200){
+            console.log("Logged in!"); 
+            console.log(response);
+            UserId = response.data.id;
+            setPersonState({ ...personState, UserId });
+            setIllnessState({ ...illnessState, UserId })
+            return response;            
+          }
+        })
+        .catch(err=>{
+          console.log(err); 
+          console.log("Error Logging In"); 
+          setRedirect("/login"); 
+        }); 
   }
+  // checkAuth();
 
+  const getPeople = () => {
+    API.getPeople()
+      .then(result => {
+        const currentUser = result.data.filter(({ UserId }) => UserId === personState.UserId)[0];
+        //console.log(me);
+        if (currentUser) { setPersonState(currentUser) };
+      });
+    API.getIllness()
+      .then(result => {
+        const currentUser = result.data.filter(({ UserId }) => UserId === illnessState.UserId)[0];
+        //console.log(me);
+        if (currentUser) { setIllnessState(currentUser) };
+      });
+  }
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
         setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
       })
     }
-
   };
 
-  // Part of this could be used to redirect on login depending on whether they've filled out the form.
-  const getPeople = () => {
-    API.getPeople()
-      .then( result => {
-        const me = result.data.filter(({UserId})=> UserId === personState.UserId)[0];
-        console.log(me);
-        if (me) {setPersonState(me)};
-      });
-      API.getIllness()
-      .then( result => {
-        const me = result.data.filter(({UserId})=> UserId === illnessState.UserId)[0];
-        console.log(me);
-        if (me) {setIllnessState(me)};
-      });
+  useEffect(
+    () => {
+
+      checkAuth();
+      getPeople();
+      getUserLocation();
+    },
+    [personState.UserId],
+  );
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    createNewPerson();
+    setRedirect({redirect: '/map'});
   }
 
   const createNewPerson = () => {
     API.createPerson(personState)
       .then(result => {
         createNewIllness();
-        console.log(result)
+        console.log(result);
         return result;
       }
       )
@@ -163,8 +155,6 @@ export default function TestForm() {
         console.log(err);
       })
   }
-
-
 
   const classes = useStyles();
 
@@ -225,6 +215,8 @@ export default function TestForm() {
   }
 
   return (
+    <div>
+    { redirect !== null ? ( <Redirect to= {redirect}/>) : (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
@@ -261,6 +253,7 @@ export default function TestForm() {
                   </Grid> */}
         </form>
       </div>
-    </Container>
+    </Container>) }
+    </div>
   );
 }

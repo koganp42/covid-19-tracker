@@ -20,7 +20,11 @@ router.route("/logout")
  //Matches with "/api/users/:id"
 router.route("/:id")
     .get(isAuthenticated, usersController.findById)
+    //.get(isAuthenticated, usersController.findAllDataById)
     .put(isAuthenticated, usersController.update)
     .delete(isAuthenticated, usersController.delete); 
+
+router.route("/data")
+    .get(isAuthenticated, usersController.findAllDataById);
 
 module.exports= router; 
