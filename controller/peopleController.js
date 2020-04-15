@@ -38,6 +38,8 @@ module.exports = {
     },
 
     update: function(req, res){
+        console.log(req.params);
+        console.log(req.body);
         db.Person   
             .update(req.body,
                 {
@@ -47,6 +49,7 @@ module.exports = {
                 }
             )
             .then(dbPerson =>{
+                console.log(dbPerson);
                 res.json(dbPerson)
             })  
             .catch(err=>{
