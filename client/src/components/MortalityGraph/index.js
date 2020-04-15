@@ -19,7 +19,7 @@ export default function MortalityGraph() {
       }, [])
 
     function loadIllnesses() {
-        API.getIllness()
+        API.getIllnesses()
         .then(res => {
             console.log(res.data);
             setIllnessData([1,2,3,4,5,6,7]);
