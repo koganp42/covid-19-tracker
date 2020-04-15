@@ -57,7 +57,7 @@ return (
     <VictoryPie
         colorScale = {['coral','#7890fd','#91e3f8',]}
         data={[
-            { x: "Died", y: percentages[0] },
+            { x: "Died", y: percentages[0]},
             { x: "Recovered", y: percentages[1]},
         ]}
     />

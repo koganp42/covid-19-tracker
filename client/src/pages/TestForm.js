@@ -228,7 +228,7 @@ export default function TestForm() {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
-      <Button href="/map" variant="outlined" color="primary">Go to Map</Button>
+
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>

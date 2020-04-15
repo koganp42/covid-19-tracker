@@ -67,7 +67,7 @@ export default function ButtonAppBar() {
                 Covid-19 Tracker
               </Typography>
               <Button href="/TestForm">Back to Form</Button>
-              <Button onClick={handleLogout}>Log Out</Button>
+              <Button href="/Login" onClick={handleLogout}>Log Out</Button>
               {/* <Link className={classes.link} to="/TestForm">Back to Form</Link>
               <Link className={classes.link} onClick={handleLogout}>Log Out</Link> */}
               
