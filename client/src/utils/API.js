@@ -40,6 +40,7 @@ export default {
   },
   // Creates a new entry on the person table.
   createPerson: function(person) {
+    console.log(person);
     return axios.post("/api/people", person);
   },
   // Creates a new entry on the illnesses table.
@@ -48,6 +49,7 @@ export default {
   },
   // Updates an entry on the person table.
   updatePerson: function(id, person) {
+    console.log(person);
     return axios.put("/api/people/" + id, person);
   },
   // Updates an entry on the illnesses table.

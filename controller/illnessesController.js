@@ -37,6 +37,7 @@ module.exports = {
     },
 
     update: function(req, res){
+        console.log(req.params.id)
         db.Illness   
             .update(req.body,
                 {
