@@ -32,7 +32,7 @@ app.use(routes);
 
 
 // Sync databeace and stand up server
-db.sequelize.sync({ force: true }).then(function(){
+db.sequelize.sync({ force: false }).then(function(){
   app.listen(PORT, function() {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
