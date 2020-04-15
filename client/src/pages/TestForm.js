@@ -7,7 +7,7 @@ import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
 import { Redirect } from "react-router-dom";
-import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePicker/DatePicker";
 
 //import API routes 
 import API from "../utils/API"
