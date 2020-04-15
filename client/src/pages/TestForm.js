@@ -7,7 +7,7 @@ import {
   CoronavirusTextField, CoronavirusRadio, FieldList
 } from "../components/FormComponents/FormFields";
 import { Redirect } from "react-router-dom";
-import { CoronavirusDatePicker } from "../components/FormComponents/datePickers/DatePicker";
+import { CoronavirusDatePicker } from "../components/FormComponents/DatePicker/DatePicker";
 
 //import API routes 
 import API from "../utils/API"
@@ -40,14 +40,16 @@ export default function TestForm() {
   //////////// Reminder to create a function for converting dob to age
   const classes = useStyles();
   let UserId;
+  const [locationState, setLocationState] = useState({
+    lat: 0,
+    lon: 0
+  })
   const [personState, setPersonState] = useState({
     firstName: "",
     lastName: "",
     age: 0,
     dateOfBirth: new Date(),
     sex: "female",
-    lat: 0,
-    lon: 0,
     smoking: "never",
     preExistingConditions: "false",
     listPreExistingConditions: "",
@@ -75,7 +77,7 @@ export default function TestForm() {
     //getUserLocation();
     API.checkAuthentication()
         .then(response=>{
-          if (response.status === 200){
+          if (response.data){
             console.log("Logged in!"); 
             UserId = response.data.id;
             getUserData(UserId);
@@ -101,11 +103,13 @@ export default function TestForm() {
         if(result.data === null){
           console.log(result);
           // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
-          setGetPeopleFailState(false);
+          setGetPeopleFailState(true);
           return 
         }
-        setGetPeopleFailState(true);
-        setPersonState(result.data);
+    
+        setGetPeopleFailState(false);
+        console.log(result.data);
+            setPersonState({...(result.data)});
       }).catch(function (err) {
         console.log(err);
       });
@@ -117,8 +121,8 @@ export default function TestForm() {
           //setGetPeopleFailState(false);
           return 
         }
-        setGetPeopleFailState(true);
-        setIllnessState(result.data);
+        //setGetPeopleFailState(true);
+        setIllnessState({...illnessState, ...result.data});
         return result;
       }).catch(function (err) {
         console.log(err);
@@ -128,29 +132,33 @@ export default function TestForm() {
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        setPersonState({ ...personState, lat: position.coords.latitude, lon: position.coords.longitude });
+        console.log(position);
+        setLocationState({ lat: position.coords.latitude, lon: position.coords.longitude });
       })
     }
   };
 
-
+  
   useEffect(
     () => {
+      getUserLocation()
       checkAuth();
-      getUserLocation();
     },
-    [getPeopleFailState],
+    [],
   );
   // useEffect(
   //   () => {
-  //     getUserLocation();
+  //     setPersonState({
+  //       ...personState, ...locationState
+  //     })
   //   },
-  //   [getPeopleFailState],
+  //   [locationState],
   // );
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
-    if(getPeopleFailState === false){
+    //await getUserLocation();
+    if(getPeopleFailState === true){
       createNewPerson();
     } else {
       updatePerson();
@@ -159,7 +167,7 @@ export default function TestForm() {
   }
 
   const createNewPerson = () => {
-    API.createPerson(personState)
+    API.createPerson({...personState, ...locationState})
       .then(result => {
         createNewIllness();
         return result;
@@ -183,7 +191,9 @@ export default function TestForm() {
   }
 
   const updatePerson = () => {
-    API.updatePerson(UserId, personState)
+    let UserId = personState.UserId;
+    console.log(UserId);
+    API.updatePerson(UserId, {...personState, ...locationState})
       .then(result => {
         updateIllness();
         return result;
@@ -194,7 +204,9 @@ export default function TestForm() {
       })
   }
   const updateIllness = () => {
-    API.createIllness(UserId, illnessState)
+    let UserId = illnessState.UserId;
+    console.log(UserId);
+    API.updateIllness(UserId, illnessState)
       .then(result => {
           setRedirect('/map');
           return result;
