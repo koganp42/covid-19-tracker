@@ -50,7 +50,7 @@ export const FieldList = [
         context: "person",
         fieldType: "date",
         id: "dateOfBirth",
-        label: "Please Enter Your Date Of Birth",
+        label: "Date Of Birth",
         required: true
     },
     {
@@ -88,7 +88,7 @@ export const FieldList = [
     {
         context: "person",
         fieldType: "input",
-        id: "listPreExitingConditions",
+        id: "listPreExistingConditions",
         label: "If you answered yes to the previous question, please list your pre-existing medical conditions:",
         type: "text",
         fullWidth: true,
@@ -141,7 +141,7 @@ export const FieldList = [
         context: "illness",
         fieldType: "radio",
         id: "hospitalized",
-        label: "Were you or are you currently hospitalized as a result of coronavirus?",
+        label: `Were you or are you currently hospitalized as a result of coronavirus?`,
         options: [
             { value: "false", label: "No" },
             { value: "true", label: "Yes" }
@@ -177,6 +177,6 @@ export const FieldList = [
         context: "illness",
         fieldType: "date",
         id: "dateOfRecovery",
-        label: "If you have successfully recovered from coronavirus, what was the approximate date you last showed symptoms?"
+        label: "If you have recovered, what date did you last show symptoms?"
     }
 ]
