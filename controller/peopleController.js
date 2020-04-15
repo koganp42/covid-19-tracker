@@ -14,7 +14,7 @@ module.exports = {
         db.Person  
             .findOne({
                 where: {
-                    id: req.params.id
+                    UserId: req.params.id
                 }
             })
             .then(dbPerson=>{
@@ -42,7 +42,7 @@ module.exports = {
             .update(req.body,
                 {
                     where: {
-                        id: req.params.id
+                        UserId: req.params.id
                     }
                 }
             )

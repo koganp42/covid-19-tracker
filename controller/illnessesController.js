@@ -13,7 +13,7 @@ module.exports = {
         db.Illness  
             .findOne({
                 where: {
-                    id: req.params.id
+                    UserId: req.params.id
                 }
             })
             .then(dbIllness=>{
@@ -41,7 +41,7 @@ module.exports = {
             .update(req.body,
                 {
                     where: {
-                        id: req.params.id
+                        UserId: req.params.id
                     }
                 }
             )

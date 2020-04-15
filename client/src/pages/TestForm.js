@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  
 }));
 
 export default function TestForm() {
   //////////// Reminder to create a function for converting dob to age
+  const classes = useStyles();
   let UserId;
   const [personState, setPersonState] = useState({
     firstName: "",
@@ -66,43 +68,62 @@ export default function TestForm() {
     UserId: 0
   });
 
-
-
+  const [getPeopleFailState, setGetPeopleFailState] = useState(null);
   const [redirect, setRedirect] = useState(null);
 
   const checkAuth = () => {
+    //getUserLocation();
     API.checkAuthentication()
         .then(response=>{
           if (response.status === 200){
             console.log("Logged in!"); 
-            console.log(response);
             UserId = response.data.id;
-            setPersonState({ ...personState, UserId });
-            setIllnessState({ ...illnessState, UserId })
+            getUserData(UserId);
             return response;            
+          }
+          else {
+            setRedirect("/login"); 
           }
         })
         .catch(err=>{
           console.log(err); 
           console.log("Error Logging In"); 
-          setRedirect("/login"); 
+          setRedirect("/login");
         }); 
   }
-  // checkAuth();
 
-  const getPeople = () => {
-    API.getPeople()
+  const getUserData = (id) => {
+    console.log("Getting user data");
+    setPersonState({ ...personState, UserId: id});
+    setIllnessState({ ...illnessState, UserId: id});
+    API.getPerson(id)
       .then(result => {
-        const currentUser = result.data.filter(({ UserId }) => UserId === personState.UserId)[0];
-        //console.log(me);
-        if (currentUser) { setPersonState(currentUser) };
+        if(result.data === null){
+          console.log(result);
+          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
+          setGetPeopleFailState(false);
+          return 
+        }
+        setGetPeopleFailState(true);
+        setPersonState(result.data);
+      }).catch(function (err) {
+        console.log(err);
       });
-    API.getIllness()
+    API.getIllness(id)
       .then(result => {
-        const currentUser = result.data.filter(({ UserId }) => UserId === illnessState.UserId)[0];
-        //console.log(me);
-        if (currentUser) { setIllnessState(currentUser) };
+        if(result.data === null){
+          console.log(result);
+          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
+          //setGetPeopleFailState(false);
+          return 
+        }
+        setGetPeopleFailState(true);
+        setIllnessState(result.data);
+        return result;
+      }).catch(function (err) {
+        console.log(err);
       });
+      
   }
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -112,27 +133,35 @@ export default function TestForm() {
     }
   };
 
+
   useEffect(
     () => {
-
       checkAuth();
-      getPeople();
       getUserLocation();
     },
-    [personState.UserId],
+    [getPeopleFailState],
   );
+  // useEffect(
+  //   () => {
+  //     getUserLocation();
+  //   },
+  //   [getPeopleFailState],
+  // );
 
   const formSubmit = (e) => {
     e.preventDefault();
-    createNewPerson();
-    setRedirect({redirect: '/map'});
+    if(getPeopleFailState === false){
+      createNewPerson();
+    } else {
+      updatePerson();
+    }
+    //setRedirect({redirect: '/map'});
   }
 
   const createNewPerson = () => {
     API.createPerson(personState)
       .then(result => {
         createNewIllness();
-        console.log(result);
         return result;
       }
       )
@@ -142,12 +171,9 @@ export default function TestForm() {
   }
 
   const createNewIllness = () => {
-
     API.createIllness(illnessState)
-      .then(
-        (result) => {
-          console.log(`4th function:`);
-          console.log(result);
+      .then(result => {
+          setRedirect('/map');
           return result;
         }
       )
@@ -156,10 +182,31 @@ export default function TestForm() {
       })
   }
 
-  const classes = useStyles();
+  const updatePerson = () => {
+    API.updatePerson(UserId, personState)
+      .then(result => {
+        updateIllness();
+        return result;
+      }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+  const updateIllness = () => {
+    API.createIllness(UserId, illnessState)
+      .then(result => {
+          setRedirect('/map');
+          return result;
+        }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+  
 
-  const fields = FieldList;
-
+  // Function for updating the person and illness states when a new 
   const handleInputChange = (key, value, context) => {
     switch (context) {
       case "person":
@@ -173,6 +220,9 @@ export default function TestForm() {
     }
   }
 
+  // Pulling in the list of questions from Fieldlist.js.
+  const fields = FieldList;
+  // Mapping the array by input type and generating the form questions accordingly.
   const getFormFields = () => {
     return fields.map(field => {
       const key = field.id;
@@ -195,7 +245,9 @@ export default function TestForm() {
             field={field}
             value={value}
             // Must pass in date as the first property here in order to expose the formatted date (or stringDate)
-            handleChange={(date, stringDate) => handleInputChange(key, stringDate, field.context)}
+            handleChange={(date, stringDate) => 
+              handleInputChange(key, stringDate, field.context)
+            }
           />);
         case "radio":
           return (<CoronavirusRadio
@@ -203,7 +255,7 @@ export default function TestForm() {
             field={field}
             value={value}
             handleChange={(e) => {
-              const { id, value } = e.target;
+              const { value } = e.target;
               handleInputChange(key, value, field.context);
             }}
           />)
@@ -226,7 +278,7 @@ export default function TestForm() {
         <Typography component="h1" variant="h5">
           Please enter your test result and some relevant personal information that will help researchers track the spread of coronavirus.
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
 
             {getFormFields()}
@@ -252,7 +304,8 @@ export default function TestForm() {
                   </Grid> */}
         </form>
       </div>
-    </Container>) }
+    </Container> 
+     ) }
     </div>
   );
 }
