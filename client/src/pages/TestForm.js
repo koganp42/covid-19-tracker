@@ -70,7 +70,7 @@ export default function TestForm() {
     UserId: 0
   });
 
-  const [getPeopleFailState, setGetPeopleFailState] = useState(null);
+  const [userDataFailState, setUserDataFailState] = useState(null);
   const [redirect, setRedirect] = useState(null);
 
   const checkAuth = () => {
@@ -94,36 +94,27 @@ export default function TestForm() {
         }); 
   }
 
+            ///////// Passed the user id from checkAuth(), getUserData sets the person and illness foreign keys to it. Then checks the db to see if that user has filled out the form before and populates the fields accordingly if so. If the current user hasn't filled out the form before, it sets userDataFailState to true. This will be used in the formSubmit to determine whether to use a post or a put call.  
   const getUserData = (id) => {
-    console.log("Getting user data");
     setPersonState({ ...personState, UserId: id});
     setIllnessState({ ...illnessState, UserId: id});
     API.getPerson(id)
       .then(result => {
         if(result.data === null){
-          console.log(result);
-          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
-          setGetPeopleFailState(true);
+          setUserDataFailState(true);
           return 
         }
-    
-        setGetPeopleFailState(false);
-        console.log(result.data);
-            setPersonState({...(result.data)});
+        setUserDataFailState(false);
+        setPersonState({...(result.data)});
       }).catch(function (err) {
         console.log(err);
       });
     API.getIllness(id)
       .then(result => {
         if(result.data === null){
-          console.log(result);
-          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
-          //setGetPeopleFailState(false);
-          return 
+          return result
         }
-        //setGetPeopleFailState(true);
         setIllnessState({...illnessState, ...result.data});
-        return result;
       }).catch(function (err) {
         console.log(err);
       });
@@ -138,7 +129,7 @@ export default function TestForm() {
     }
   };
 
-  
+            ///////// Use effect for setting user's location in state, then runs checkAuth to validate user and then retrieves their prior survey answers if they exist. /////////
   useEffect(
     () => {
       getUserLocation()
@@ -146,19 +137,19 @@ export default function TestForm() {
     },
     [],
   );
-  // useEffect(
-  //   () => {
-  //     setPersonState({
-  //       ...personState, ...locationState
-  //     })
-  //   },
-  //   [locationState],
-  // );
+            ///////// Use effect triggered any time the date of birth is changed, converts that date to age and sets it in state. /////////
+  useEffect(
+    () => {
+      convertDateOfBirth(personState.dateOfBirth);
+    },
+    [personState.dateOfBirth],
+  );
 
+          ///////// On form submission, the user's information is either saved or updated depending on whether the prior getUserData() function retrieved a null 
   const formSubmit = async (e) => {
     e.preventDefault();
     //await getUserLocation();
-    if(getPeopleFailState === true){
+    if(userDataFailState === true){
       createNewPerson();
     } else {
       updatePerson();
@@ -166,6 +157,9 @@ export default function TestForm() {
     //setRedirect({redirect: '/map'});
   }
 
+  ///////    The following four functions follow the same pattern of either creating or updating the person table 
+  ///////    and then calling the second function for creating or updating the illness table. 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const createNewPerson = () => {
     API.createPerson({...personState, ...locationState})
       .then(result => {
@@ -216,9 +210,23 @@ export default function TestForm() {
         console.log(err);
       })
   }
-  
 
-  // Function for updating the person and illness states when a new 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  const convertDateOfBirth = (dateString) => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    parseFloat(age);
+    setPersonState({ ...personState, age: age });
+    return age;
+  }
+
+  // Function for updating the person and illness states when their respective fields are changed. 
   const handleInputChange = (key, value, context) => {
     switch (context) {
       case "person":
@@ -307,14 +315,6 @@ export default function TestForm() {
           >
             Submit
           </Button>
-          {/* Commenting the following out to be used in a later version */}
-          {/* <Grid container justify="flex-end">
-                      <Grid item>
-                          <Link href="#" variant="body2">
-                              Already have an account? Sign in
-                          </Link>
-                      </Grid>
-                  </Grid> */}
         </form>
       </div>
     </Container> 
