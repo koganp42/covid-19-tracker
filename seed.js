@@ -224,7 +224,7 @@ const illnessesToSeed= [
         "intensiveCare": "false",
         "death": "false",
         "dateOfRecovery": "2020-02-17",
-        "PersonId": 1
+        "UserId": 1
     },
     {
         "tested": "true",
@@ -236,7 +236,7 @@ const illnessesToSeed= [
         "intensiveCare": "true",
         "death": "true",
         "dateOfRecovery": "2020-03-17",
-        "PersonId": 2
+        "UserId": 2
     },
     {
         "tested": "true",
@@ -248,7 +248,7 @@ const illnessesToSeed= [
         "intensiveCare": "true",
         "death": "false",
         "dateOfRecovery": "2020-03-17",
-        "PersonId": 4
+        "UserId": 4
     },
     {
         "tested": "true",
@@ -260,7 +260,7 @@ const illnessesToSeed= [
         "intensiveCare": "true",
         "death": "false",
         "dateOfRecovery": "2020-03-10",
-        "PersonId": 5
+        "UserId": 5
     },
     {
         "tested": "true",
@@ -272,7 +272,7 @@ const illnessesToSeed= [
         "intensiveCare": "true",
         "death": "false",
         "dateOfRecovery": "2020-03-17",
-        "PersonId": 6
+        "UserId": 6
     },
     {
         "tested": "true",
@@ -284,7 +284,7 @@ const illnessesToSeed= [
         "intensiveCare": "false",
         "death": "false",
         "dateOfRecovery": "2020-03-09",
-        "PersonId": 8
+        "UserId": 8
     },
     {
         "tested": "true",
@@ -296,7 +296,7 @@ const illnessesToSeed= [
         "intensiveCare": "false",
         "death": "false",
         "dateOfRecovery": "2020-04-08",
-        "PersonId": 9
+        "UserId": 9
     },
     {
         "tested": "true",
@@ -308,7 +308,7 @@ const illnessesToSeed= [
         "intensiveCare": "false",
         "death": "false",
         "dateOfRecovery": "2020-04-08",
-        "PersonId": 11
+        "UserId": 11
     },
     {
         "tested": "true",
@@ -320,7 +320,7 @@ const illnessesToSeed= [
         "intensiveCare": "false",
         "death": "true",
         "dateOfRecovery": "2020-04-08",
-        "PersonId": 12
+        "UserId": 12
     }
 ]
 
