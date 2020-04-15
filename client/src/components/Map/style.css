@@ -1,13 +1,13 @@
 .mainDiv {
-    height: 60%;
+    height: 79vh;
+    width: auto
 
-    width: 100%;
     
 }
 
 .mapContainer {
 display: flex;
-width: 100vw;
+width: 100%;
 
 
 }

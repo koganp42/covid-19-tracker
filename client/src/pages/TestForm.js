@@ -17,7 +17,7 @@ import API from "../utils/API"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(5),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -272,6 +272,7 @@ export default function TestForm() {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
+
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>

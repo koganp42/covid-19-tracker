@@ -11,7 +11,7 @@ const useStyles = makeStyles({
  
 });
 
-export default function CenteredTabs() {
+export default function CenteredTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -28,9 +28,27 @@ export default function CenteredTabs() {
         textColor="primary"
         centered
       >
-        <Tab label="Kogan" />
-        <Tab label="Jamie" />
-        <Tab label="Alex" />
+        <Tab label="Hide Graphs" onClick={()=>{
+          props.setGraphSelect({
+            graph:'none',
+            mapWidth: '100vw'
+            
+          })
+        }}/>
+        <Tab label="Cases by Age" onClick={()=>{
+          props.setGraphSelect({
+            graph:'age',
+            mapWidth: '50vw'
+          })
+        }}/>
+        <Tab label="Cases by Outcome" onClick={()=>{
+          props.setGraphSelect({
+            graph:'outcome',
+            mapWidth: '50vw'
+          })
+        }}/>
+
+        
       </Tabs>
     </Paper>
   );
