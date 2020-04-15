@@ -27,15 +27,15 @@ module.exports = function(sequelize, DataTypes) {
                 min: 0
             }
         },
-        // dateOfBirth: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     validate: {
-        //         isDate: true,
-        //         isAfter: "1902-01-01",
-        //         isBefore: dateStr
-        //     }
-        // },
+        dateOfBirth: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isDate: true,
+                isAfter: "1902/01/01",
+                isBefore: new Date()
+            }
+        },
         sex: {
             type: DataTypes.STRING,
             allowNull: false,
