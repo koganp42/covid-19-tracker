@@ -1,9 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
     let d = new Date();
-    let date = d. getDate()
+    let date = d. getDate()+1
     let month = d. getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12.
     let year = d. getFullYear();
-    let dateStr = year + "-" + month + "-" + date;
+    let dateStr = year + "-" + month + "-" + date; 
     const Illness = sequelize.define("Illness", {
         tested: {
             type: DataTypes.STRING,
@@ -75,6 +75,24 @@ module.exports = function(sequelize, DataTypes) {
         }
     }); 
     
+    Illness.addHook("beforeCreate", function(illness) {
+        if (illness.tested=== "false"){
+            illness.dateOfTest = null; 
+        }
+        if (illness.hospitalized === "false"){
+            illness.dateOfHospitalization = null; 
+        }
+      });
+
+    Illness.addHook("beforeBulkUpdate", function(illness) {
+        if (illness.tested=== "false"){
+            illness.dateOfTest = null; 
+        }
+        if (illness.hospitalized === "false"){
+            illness.dateOfHospitalization = null; 
+        }
+    });
+
     Illness.associate = function(models) {
         Illness.belongsTo(models.User);
       };
