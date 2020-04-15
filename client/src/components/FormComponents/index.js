@@ -1,2 +1,2 @@
-export * from "./datePickers";
+export * from "./DatePicker";
 export * from "./FormFields";
