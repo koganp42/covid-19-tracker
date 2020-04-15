@@ -88,7 +88,7 @@ export const FieldList = [
     {
         context: "person",
         fieldType: "input",
-        id: "listPreExitingConditions",
+        id: "listPreExistingConditions",
         label: "If you answered yes to the previous question, please list your pre-existing medical conditions:",
         type: "text",
         fullWidth: true,
