@@ -4,6 +4,14 @@ import API from "../../utils/API";
 import { responsiveFontSizes } from '@material-ui/core';
 
 export default function  AgeGraph () {
+
+  const colors = {
+    coral: '#ff7b48',
+    purple: '#6c63ff',
+    lightBlue: '#91e3f8',
+    lightPurple: '#7890fd'
+  }
+
   const [ageData, setAgeData] = useState([]); 
   const [ageObject, setAgeObject] = useState(); 
   const [data, setData]= useState([
@@ -29,14 +37,6 @@ export default function  AgeGraph () {
                 const newData = sickArray.map(person => person.age);
                 setAgeData(newData); 
                 createAgeObject(newData); 
-                // console.log(ageObject); 
-                // setData([
-                //   {ageRange: 1,  cases: ageObject["0-20"]},
-                //   {ageRange: 2,  cases: ageObject["21-40"]},
-                //   {ageRange: 3,  cases: ageObject["41-60"]},
-                //   {ageRange: 4,  cases: ageObject["61-80"]},
-                //   {ageRange: 5,  cases: ageObject["81+"]}
-                // ]);  
                 
             })
             .catch(err=>console.log(err)); 
@@ -74,11 +74,12 @@ export default function  AgeGraph () {
     }; 
 
     return (
-      <div>
-        <h1>Cases by Age</h1>
+      <div style={{height:'80%', width:'80%'}}>
+        <h2>Cases by Age</h2>
         <VictoryChart
         theme={VictoryTheme.material}
          domainPadding={20}
+
         >
            <VictoryAxis
            independentAxis
@@ -107,6 +108,7 @@ export default function  AgeGraph () {
         />
           <VictoryBar
             data={data}
+            style={{ data: { fill: colors.lightPurple } }}
             // data accessor for x values
             x="ageRange"
             // data accessor for y values

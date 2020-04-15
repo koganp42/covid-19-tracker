@@ -5,6 +5,7 @@ import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
 
 import "./style.css"
+import AgeGraph from "../AgeGraph";
 
 
 
@@ -38,7 +39,8 @@ function Map(props) {
     return (
         <Fragment>
         <GoogleMap 
-            defaultZoom={10} 
+            // width={'50%'}
+            defaultZoom={9} 
             defaultCenter={{lat:36.166340, lng:-86.779068}}
             defaultOptions={{styles:mapStyles}}
         >
@@ -91,21 +93,25 @@ function Map(props) {
 
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
-export default function App() {
+export default function App(props) {
     return(
-   
-        <div style={{width:"100vh", height:"80vh"}} className={"mainDiv"}>
+        
+        <Fragment >
+        <div  className={"mainDiv"}>
 
             <WrappedMap 
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
                 loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
-                containerElement={<div style={{height:'100%'}} className={"mapContainer"} />}
+                containerElement={<div style={{height:'100%', width: props.graphSelect.mapWidth}} className={"mapContainer"} />}
                 mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
             >
                {console.log(patientData)}
             </WrappedMap>
-            
-        </div>
+
+            </div>
+
+
+        </Fragment>
 
    
 
