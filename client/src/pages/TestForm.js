@@ -68,40 +68,62 @@ export default function TestForm() {
     UserId: 0
   });
 
+  const [getPeopleFailState, setGetPeopleFailState] = useState(null);
   const [redirect, setRedirect] = useState(null);
 
   const checkAuth = () => {
+    //getUserLocation();
     API.checkAuthentication()
         .then(response=>{
           if (response.status === 200){
             console.log("Logged in!"); 
-            console.log(response);
             UserId = response.data.id;
-            setPersonState({ ...personState, UserId });
-            setIllnessState({ ...illnessState, UserId })
+            getUserData(UserId);
             return response;            
+          }
+          else {
+            setRedirect("/login"); 
           }
         })
         .catch(err=>{
           console.log(err); 
           console.log("Error Logging In"); 
-          setRedirect("/login"); 
+          setRedirect("/login");
         }); 
   }
 
-  const getPeople = () => {
-    API.getPeople()
+  const getUserData = (id) => {
+    console.log("Getting user data");
+    setPersonState({ ...personState, UserId: id});
+    setIllnessState({ ...illnessState, UserId: id});
+    API.getPerson(id)
       .then(result => {
-        const currentUser = result.data.filter(({ UserId }) => UserId === personState.UserId)[0];
-        //console.log(me);
-        if (currentUser) { setPersonState(currentUser) };
+        if(result.data === null){
+          console.log(result);
+          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
+          setGetPeopleFailState(false);
+          return 
+        }
+        setGetPeopleFailState(true);
+        setPersonState(result.data);
+      }).catch(function (err) {
+        console.log(err);
       });
-    API.getIllness()
+    API.getIllness(id)
       .then(result => {
-        const currentUser = result.data.filter(({ UserId }) => UserId === illnessState.UserId)[0];
-        //console.log(me);
-        if (currentUser) { setIllnessState(currentUser) };
+        if(result.data === null){
+          console.log(result);
+          // If the current user hasn't filled out the form before, set the below state to true. This will be used in the formSubmit to determine whether to use a post or a put call.
+          //setGetPeopleFailState(false);
+          return 
+        }
+        setGetPeopleFailState(true);
+        setIllnessState(result.data);
+        return result;
+      }).catch(function (err) {
+        console.log(err);
       });
+      
   }
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -111,19 +133,29 @@ export default function TestForm() {
     }
   };
 
+
   useEffect(
     () => {
       checkAuth();
-      getPeople();
       getUserLocation();
     },
-    [personState.UserId],
+    [getPeopleFailState],
   );
+  // useEffect(
+  //   () => {
+  //     getUserLocation();
+  //   },
+  //   [getPeopleFailState],
+  // );
 
   const formSubmit = (e) => {
     e.preventDefault();
-    createNewPerson();
-    setRedirect({redirect: '/map'});
+    if(getPeopleFailState === false){
+      createNewPerson();
+    } else {
+      updatePerson();
+    }
+    //setRedirect({redirect: '/map'});
   }
 
   const createNewPerson = () => {
@@ -139,10 +171,9 @@ export default function TestForm() {
   }
 
   const createNewIllness = () => {
-
     API.createIllness(illnessState)
-      .then(
-        (result) => {
+      .then(result => {
+          setRedirect('/map');
           return result;
         }
       )
@@ -150,6 +181,30 @@ export default function TestForm() {
         console.log(err);
       })
   }
+
+  const updatePerson = () => {
+    API.updatePerson(UserId, personState)
+      .then(result => {
+        updateIllness();
+        return result;
+      }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+  const updateIllness = () => {
+    API.createIllness(UserId, illnessState)
+      .then(result => {
+          setRedirect('/map');
+          return result;
+        }
+      )
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+  
 
   // Function for updating the person and illness states when a new 
   const handleInputChange = (key, value, context) => {
@@ -249,7 +304,8 @@ export default function TestForm() {
                   </Grid> */}
         </form>
       </div>
-    </Container>) }
+    </Container> 
+     ) }
     </div>
   );
 }
