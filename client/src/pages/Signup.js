@@ -75,7 +75,6 @@ export default function Signup() {
               API.authenticateUser(userState)
               .then(response=>{
                 if (response.status === 200){
-                  console.log("Logged in!"); 
                   setRedirect("/testForm"); 
                 }
               })
