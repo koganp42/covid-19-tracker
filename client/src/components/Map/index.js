@@ -3,9 +3,8 @@ import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'reac
 import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
-
 import "./style.css"
-import AgeGraph from "../AgeGraph";
+
 
 function Map(props) {
 
