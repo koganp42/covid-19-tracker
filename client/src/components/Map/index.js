@@ -14,11 +14,20 @@ function Map(props) {
 
     const [selectedPin, updateSelectedPin] = useState(null);
     const [people, setPeople] = useState([]);
+    const [admin, setAdmin]= useState(false); 
 
 
       // Load all books and store them with setBooks
   useEffect(() => {
     loadPeople()
+    API.checkAuthentication()
+        .then(user=>{
+            if (user.data.admin==="true"){
+                console.log("setting admin"); 
+                setAdmin(true); 
+            }
+        })
+        .catch(err=>console.log(err)); 
   }, [])
 
   // Loads all People and sets them to People
@@ -62,26 +71,31 @@ function Map(props) {
                 ))}
 
             {selectedPin && (
+                 (admin ? (
                 <InfoWindow 
-                position={{
+                    position={{
 
-                    lat:selectedPin.lat, lng:selectedPin.lon
+                        lat:selectedPin.lat, lng:selectedPin.lon
 
-                }} 
-                onCloseClick={() => {
-                    updateSelectedPin(null)
-                }}
-                >
-                    <div>
-                        <h5>ID: {selectedPin.id}</h5>
+                    }} 
+                    onCloseClick={() => {
+                        updateSelectedPin(null)
+                    }}
+                    >
+                        <div>
+                            <h5>ID: {selectedPin.id}</h5>
 
-                        <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
+                            <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
 
-                        <p>Age: {selectedPin.age}</p>
-                        <p>Sex: {selectedPin.sex}</p>
-                        <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
-                    </div>
+                            <p>Age: {selectedPin.age}</p>
+                            <p>Sex: {selectedPin.sex}</p>
+                            <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
+                        </div>
                 </InfoWindow>
+                 ) : (
+                <div></div>
+                 )
+                )
             )}
 
         </GoogleMap>
