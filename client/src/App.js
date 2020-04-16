@@ -10,19 +10,14 @@ import Signup from "./pages/Signup";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Graphs from "./pages/Graphs"; 
-// import {LoggedInProvider} from "./utils/GlobalState"; 
 
-//Redux
-import { Provider } from 'react-redux'
-import store from './store';
 
 require('dotenv').config();
 
 
 function App() {
   return (
-    <Provider store={store}>
-    {/* <LoggedInProvider> */}
+
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
@@ -33,7 +28,6 @@ function App() {
           </Route>
           <Route exact path={["/map"]}>   
             <Map />
-          
           </Route>
           {/* <Route exact path="/users/:id">
             <User />
@@ -51,8 +45,7 @@ function App() {
         </div>
       </MuiPickersUtilsProvider>
     </Router>
-    {/* </LoggedInProvider>  */}
-    </Provider>
+
   );
 }
 

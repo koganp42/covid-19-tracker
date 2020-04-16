@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3001;
 
 //To use .env file on localserver
 require('dotenv').config();
-
+console.log(process.env)
 //Sql data 
 const db= require("./models"); 
 
