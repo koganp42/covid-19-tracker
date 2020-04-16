@@ -20,8 +20,7 @@ function App() {
  
  
   return (
-    <Provider store={store}>
-    {/* <LoggedInProvider> */}
+    <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
       <Header />
@@ -48,9 +47,7 @@ function App() {
         </Switch>
         </div>
       </MuiPickersUtilsProvider>
-
-    {/* </LoggedInProvider>  */}
-    </Provider>
+    </div>
   );
 }
 
