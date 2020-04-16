@@ -1,6 +1,6 @@
 
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Switch, useLocation } from "react-router-dom";
 import TestForm from "./pages/TestForm";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
@@ -16,14 +16,18 @@ require('dotenv').config();
 
 
 function App() {
-  return (
 
-    <Router>
+ 
+ 
+  return (
+    <Provider store={store}>
+    {/* <LoggedInProvider> */}
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div>
       <Header />
         <Switch>
-          <Route exact path={["/", "/login"]}>   
+          <Route exact path={["/", "/login"]}>
+
             <Login />
           </Route>
           <Route exact path={["/map"]}>   
@@ -44,8 +48,9 @@ function App() {
         </Switch>
         </div>
       </MuiPickersUtilsProvider>
-    </Router>
 
+    {/* </LoggedInProvider>  */}
+    </Provider>
   );
 }
 
