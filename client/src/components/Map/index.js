@@ -41,6 +41,7 @@ function Map(props) {
              
 
             {people.map(patient => (
+                
                 <Marker 
                 key={patient.id} 
                 position={{lat:patient.lat, lng:patient.lon}} 
@@ -49,7 +50,7 @@ function Map(props) {
                     updateSelectedPin(patient)
                 }}
                 icon={{
-                    url: "/coronavirus.png",
+                    url: patient.sick ? "/coronavirus.png": "/pharmacy.png",
                     scaledSize: new window.google.maps.Size(25, 25)
                 }}
                 /> 
