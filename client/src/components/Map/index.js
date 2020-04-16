@@ -3,22 +3,25 @@ import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'reac
 import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
-
 import "./style.css"
-import AgeGraph from "../AgeGraph";
-
-
 
 
 function Map(props) {
 
     const [selectedPin, updateSelectedPin] = useState(null);
     const [people, setPeople] = useState([]);
+    const [admin, setAdmin]= useState(false); 
 
-
-      // Load all books and store them with setBooks
   useEffect(() => {
     loadPeople()
+    API.checkAuthentication()
+        .then(user=>{
+            if (user.data.admin==="true"){
+                console.log("setting admin"); 
+                setAdmin(true); 
+            }
+        })
+        .catch(err=>console.log(err)); 
   }, [])
 
   // Loads all People and sets them to People
@@ -62,26 +65,31 @@ function Map(props) {
                 ))}
 
             {selectedPin && (
+                 (admin ? (
                 <InfoWindow 
-                position={{
+                    position={{
 
-                    lat:selectedPin.lat, lng:selectedPin.lon
+                        lat:selectedPin.lat, lng:selectedPin.lon
 
-                }} 
-                onCloseClick={() => {
-                    updateSelectedPin(null)
-                }}
-                >
-                    <div>
-                        <h5>ID: {selectedPin.id}</h5>
+                    }} 
+                    onCloseClick={() => {
+                        updateSelectedPin(null)
+                    }}
+                    >
+                        <div>
+                            <h5>ID: {selectedPin.id}</h5>
 
-                        <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
+                            <p>Name: {`${selectedPin.firstName} ${selectedPin.lastName}`}</p>
 
-                        <p>Age: {selectedPin.age}</p>
-                        <p>Sex: {selectedPin.sex}</p>
-                        <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
-                    </div>
+                            <p>Age: {selectedPin.age}</p>
+                            <p>Sex: {selectedPin.sex}</p>
+                            <p>Smoker: {selectedPin.smoker===true ? "Yes" : "No"}</p>
+                        </div>
                 </InfoWindow>
+                 ) : (
+                <div></div>
+                 )
+                )
             )}
 
         </GoogleMap>
@@ -94,9 +102,12 @@ function Map(props) {
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function App(props) {
+    // let API_KEY = {AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw}
+    
+    
     return(
         
-        <Fragment >
+       <Fragment >
         <div  className={"mainDiv"}>
 
             <WrappedMap 
