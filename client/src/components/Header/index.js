@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import API from '../../utils/API';
-import {Redirect} from "react-router-dom"; 
+import {Redirect, useLocation} from "react-router-dom"; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,17 +31,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ButtonAppBar() {
-
-  
-
+export default function ButtonAppBar(props) {
 
   const classes = useStyles();
   const [redirect, setRedirect] = useState( null); 
-
+  let location=useLocation();
+  const [locationState, setLocationState] = useState({});
   useEffect(()=>{ 
     setRedirect(null); 
     console.log("navbar to check logout"); 
+    console.log(location);
+    const path = location.pathname.toLowerCase().substr(1);
+    console.log(path);
+    setLocationState(
+      {
+        map: (path !== 'map'),
+        testform: (path !== 'testform'),
+        login: (path !== 'login')
+      }
+    )
 
 }, [redirect])
 
@@ -66,9 +73,9 @@ export default function ButtonAppBar() {
               <Typography variant="h6" className={classes.title}>
                 Covid-19 Tracker
               </Typography>
-              <Button href="/Map">Go to Map</Button>
-              <Button href="/TestForm">Go to Form</Button>
-              <Button href="/Login" onClick={handleLogout}>Log Out</Button>
+              {(locationState.map) ? <Button href="/Map">Go to Map</Button> :""}
+              {(locationState.testform) ? <Button href="/TestForm">Go to Form</Button> :""}
+              {(locationState.login) ? <Button href="/Login" onClick={handleLogout}>Log Out</Button> :""}
               {/* <Link className={classes.link} to="/TestForm">Back to Form</Link>
               <Link className={classes.link} onClick={handleLogout}>Log Out</Link> */}
               
