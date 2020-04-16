@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { VictoryPie, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
+import { VictoryPie, VictoryChart, VictoryAxis, VictoryLegend } from 'victory';
 import API from "../../utils/API"; 
+import './style.css'
 
 export default function MortalityGraph() {
     const colors = {
@@ -10,6 +11,7 @@ export default function MortalityGraph() {
         lightPurple: '#7890fd',
         red: '#fe425c'
       }
+
 
     const [illnessData, setIllnessData] = useState([]);
     const [percentages, setPercentages] = useState([]);
@@ -52,7 +54,7 @@ export default function MortalityGraph() {
     }
 
 return (
-    <div style={{height:'80%', width:'80%'}}>
+    <div className={"chartDiv"} style={{height:'80%', width:'80%'}}>
     <h2>Cases by Outcome</h2>
     <VictoryPie
         colorScale = {['coral','#7890fd','#91e3f8',]}

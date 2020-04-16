@@ -3,11 +3,7 @@ import { GoogleMap, withScriptjs, withGoogleMap , Marker, InfoWindow} from 'reac
 import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
-
 import "./style.css"
-import AgeGraph from "../AgeGraph";
-
-
 
 
 function Map(props) {
@@ -16,8 +12,6 @@ function Map(props) {
     const [people, setPeople] = useState([]);
     const [admin, setAdmin]= useState(false); 
 
-
-      // Load all books and store them with setBooks
   useEffect(() => {
     loadPeople()
     API.checkAuthentication()
@@ -108,9 +102,12 @@ function Map(props) {
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function App(props) {
+    // let API_KEY = {AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw}
+    
+    
     return(
         
-        <Fragment >
+       <Fragment >
         <div  className={"mainDiv"}>
 
             <WrappedMap 
