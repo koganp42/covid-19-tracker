@@ -7,7 +7,7 @@ Our motivation for this project was simple: as the COVID-19 pandemic unfolded, w
 ![](images/screenshot2.png)
 
 ## View
-View the deployed application on [Heroku](hhttps://covid19trackerapp.herokuapp.com/)
+View the deployed application on [Heroku](https://covid19trackerapp.herokuapp.com/)
 
 ## Instillation/ Set-up
 1. Clone or Fork this repo on to your local machine
