@@ -36,13 +36,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
     const [redirect, setRedirect] = useState( null); 
     const classes = useStyles();
-    const [signupHidden, setSignupHidden]= useState({}); 
-    const [errorHidden, setErrorHidden]= useState({display: "none"}); 
     
     const [userState, setUserState] = useState({
         email: "",
         password: "",
-        admin: false,
+        admin: "false",
         adminPassword: ""
     });
 
@@ -59,22 +57,18 @@ export default function Signup() {
         .then(response=>{
             if (response.status === 200){
               console.log("User created!");  
-            } else if (response.status === 401){
-                console.log("Error in creation"); 
             }
-
           })
           .catch(err=>{
             console.log(err); 
             console.log("Error Logging In"); 
-            setSignupHidden({display: "none"}); 
-            setErrorHidden({}); 
             setRedirect(null); 
             console.log(redirect); 
           }).then(response => {
               API.authenticateUser(userState)
               .then(response=>{
                 if (response.status === 200){
+                  console.log("Logged in!"); 
                   setRedirect("/testForm"); 
                 }
               })
@@ -87,14 +81,6 @@ export default function Signup() {
           })
     }
     
-    const handleOnClick= (event)=>{
-        setErrorHidden({display: "none"}); 
-        setSignupHidden({}); 
-      }
-
-    const redirectClick= ()=>{
-        setRedirect("/login"); 
-    }
 
     return (
         <div>
@@ -108,13 +94,7 @@ export default function Signup() {
                 <Typography component="h1" variant="h6">
                     Sign up to contribute to the coronavirus test results tracker!
                 </Typography>
-                <div  className={classes.paper} style={errorHidden}>
-                    <h3>Oops!</h3>
-                    <p>Your account could not be created as entered.</p>
-                    <button onClick={handleOnClick}>Try Again</button>
-                    <button onClick={redirectClick}>Already Have an Account?</button>
-                  </div>
-                <form className={classes.form} noValidate style={signupHidden}>
+                <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
 
                         <Grid item xs={12}>
