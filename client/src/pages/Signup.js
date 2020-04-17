@@ -38,11 +38,11 @@ export default function Signup() {
     const classes = useStyles();
     const [signupHidden, setSignupHidden]= useState({}); 
     const [errorHidden, setErrorHidden]= useState({display: "none"}); 
-    
+
     const [userState, setUserState] = useState({
         email: "",
         password: "",
-        admin: false,
+        admin: "false",
         adminPassword: ""
     });
 
@@ -59,10 +59,7 @@ export default function Signup() {
         .then(response=>{
             if (response.status === 200){
               console.log("User created!");  
-            } else if (response.status === 401){
-                console.log("Error in creation"); 
             }
-
           })
           .catch(err=>{
             console.log(err); 
@@ -75,6 +72,7 @@ export default function Signup() {
               API.authenticateUser(userState)
               .then(response=>{
                 if (response.status === 200){
+                  console.log("Logged in!"); 
                   setRedirect("/testForm"); 
                 }
               })

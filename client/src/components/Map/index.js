@@ -17,7 +17,9 @@ function Map(props) {
     loadPeople()
     API.checkAuthentication()
         .then(user=>{
-            if (user.data.admin==="true"){
+            console.log("running authentication"); 
+            console.log(user.data.admin); 
+            if (user.data.admin === "true"){
                 console.log("setting admin"); 
                 setAdmin(true); 
             }

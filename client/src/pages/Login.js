@@ -5,6 +5,7 @@ import {Redirect, Link} from "react-router-dom";
 import {
   Avatar, Button, Container, CssBaseline, makeStyles, Typography, Grid,  TextField
 } from '@material-ui/core';
+require('dotenv').config();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +34,9 @@ export default function BasicTextFields() {
   const [loginHidden, setLoginHidden]= useState({}); 
   const [errorHidden, setErrorHidden]= useState({display: "none"}); 
 
+ 
   useEffect(()=>{ 
+    console.log(process.env.REACT_APP_SECRET_NAME);
     console.log("Check check"); 
     API.checkAuthentication()
         .then(response=>{
