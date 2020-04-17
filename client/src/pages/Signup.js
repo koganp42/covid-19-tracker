@@ -36,11 +36,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
     const [redirect, setRedirect] = useState( null); 
     const classes = useStyles();
-    
+    const [signupHidden, setSignupHidden]= useState({}); 
+    const [errorHidden, setErrorHidden]= useState({display: "none"}); 
+
     const [userState, setUserState] = useState({
         email: "",
         password: "",
-        admin: false,
+        admin: "false",
         adminPassword: ""
     });
 
@@ -62,6 +64,8 @@ export default function Signup() {
           .catch(err=>{
             console.log(err); 
             console.log("Error Logging In"); 
+            setSignupHidden({display: "none"}); 
+            setErrorHidden({}); 
             setRedirect(null); 
             console.log(redirect); 
           }).then(response => {
@@ -81,6 +85,14 @@ export default function Signup() {
           })
     }
     
+    const handleOnClick= (event)=>{
+        setErrorHidden({display: "none"}); 
+        setSignupHidden({}); 
+      }
+
+    const redirectClick= ()=>{
+        setRedirect("/login"); 
+    }
 
     return (
         <div>
@@ -94,7 +106,13 @@ export default function Signup() {
                 <Typography component="h1" variant="h6">
                     Sign up to contribute to the coronavirus test results tracker!
                 </Typography>
-                <form className={classes.form} noValidate>
+                <div  className={classes.paper} style={errorHidden}>
+                    <h3>Oops!</h3>
+                    <p>Your account could not be created as entered.</p>
+                    <button onClick={handleOnClick}>Try Again</button>
+                    <button onClick={redirectClick}>Already Have an Account?</button>
+                  </div>
+                <form className={classes.form} noValidate style={signupHidden}>
                     <Grid container spacing={2}>
 
                         <Grid item xs={12}>

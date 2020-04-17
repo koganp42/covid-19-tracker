@@ -64,13 +64,13 @@ module.exports = {
     },
 
     create: function (req, res) {
-        console.log(req.body);
         db.User
             .create(req.body)
             .then(result => {
                 res.status(200).json(result)
             })
             .catch(err => {
+                res.status(401).json(err); 
                 console.log(err);
             });
     },
