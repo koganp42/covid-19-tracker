@@ -64,7 +64,6 @@ module.exports = {
     },
 
     create: function (req, res) {
-        console.log(req.body);
         db.User
             .create(req.body)
             .then(result => {
