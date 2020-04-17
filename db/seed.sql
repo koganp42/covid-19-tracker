@@ -8,6 +8,7 @@ INSERT INTO Users (email, password, createdAt, updatedAt)
 INSERT INTO People (firstName, lastName, age, sex, lat, lon, smoking, preExistingConditions, sick, UserId, createdAt, updatedAt)
     VALUES ("Ben", "Simmons", 44, "male", 36.151490, -86.765010, "never", false, true, 1, "2020-02-22 04:01:38", "2020-02-22 04:01:38"),
      ("Brenda", "Lockwood", 39, "female", 36.138750, -86.801790, "never", false, false, 2, "2020-02-22 04:01:38", "2020-02-22 04:01:38");
+     
  -- [
 
  --     {
