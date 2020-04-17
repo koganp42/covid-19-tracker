@@ -137,9 +137,5 @@ export default function App(props) {
 
 
         </Fragment>
-
-   
-
-   
     )
 };
