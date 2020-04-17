@@ -4,6 +4,7 @@ import patientData from "../../utils/patientData";
 import mapStyles from "../../styleStuff/mapStyles"
 import API from "../../utils/API"
 import "./style.css"
+require('dotenv').config();
 
 
 function Map(props) {
@@ -50,7 +51,8 @@ function Map(props) {
              
 
             {people.map(patient => (
-                <Marker 
+                patient.sick==='true' ? 
+                (<Marker 
                 key={patient.id} 
                 position={{lat:patient.lat, lng:patient.lon}} 
 
@@ -61,7 +63,20 @@ function Map(props) {
                     url: "/coronavirus.png",
                     scaledSize: new window.google.maps.Size(25, 25)
                 }}
-                /> 
+                />) : 
+                (<Marker 
+                key={patient.id} 
+                position={{lat:patient.lat, lng:patient.lon}} 
+
+                onClick={() => {
+                    updateSelectedPin(patient)
+                }}
+                icon={{
+                    url: "/pharmacy.png",
+                    scaledSize: new window.google.maps.Size(25, 25)
+                }}
+                />)
+
                 ))}
 
             {selectedPin && (
@@ -102,16 +117,15 @@ function Map(props) {
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function App(props) {
-    // let API_KEY = {AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw}
+
     
     
     return(
-        
        <Fragment >
         <div  className={"mainDiv"}>
-
+            {/* {process.env.API_KEY} */}
             <WrappedMap 
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyACzcnTqh0EIE1HAJ1E605RBcwlWHAQ0Mw`}
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_API_KEY}`}
                 loadingElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
                 containerElement={<div style={{height:'100%', width: props.graphSelect.mapWidth}} className={"mapContainer"} />}
                 mapElement={<div style={{height:'100%'}} className={"mapContainer"}/>}
